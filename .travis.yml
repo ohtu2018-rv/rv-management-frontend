@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- '9'
+cache:
+  yarn: true
+  directories:
+  - node_modules
+install:
+- yarn
+- yarn build-css
+deploy:
+  provider: heroku
+  api_key:
+    secure: SECURE
+  app:
+    develop: rv-management-dev
+    master: rv-management
