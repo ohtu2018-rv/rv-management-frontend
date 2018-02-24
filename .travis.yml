@@ -11,7 +11,7 @@ install:
 deploy:
   provider: heroku
   api_key:
-    secure: SECURE
+    secure: t+S3VLxlJyPI95+U/8I5fRb5dKlGWbfxvdFq92e6z0tSWiJuDkq3LVg4WLjcRMAzaniT3cY5O94zgjnePsrbH1QwUvWlhzEGzYi+i3Q81bDBIvoYnvkrXy26wj9PnVjC/ruQLMfVFrTfMUZFHSES3flEukkdDAb/S/2fnuCYeRxYQ1H61NEMbZoHauBGbGO1Ykbihklg74RcTIzJEKAihIvKjRUCoXX8BL9sRrd9JvgGys8KMt0bqyj1bnJVnlYxlSL/MZm0paqBuc+1XwPaiWXjpPkUmVyjl0KSOxAYlqKkC7oAGkfAwMbTSAkg/IBR8pjlhR0Uq/iaLDFty/++VwMeai1ooG6/eV81IoaSutvLTzdkbyiPBXKNKUt0a6om8bo3hDZW/3qgHxps0kRVmhvtLwrIc7EIeAz7zAcrYqYhS7bKSN1PrFx8JpKPjNTro20uufqv24LrmGM5sKVDgjaawOAKvOkpzlmPok+p0uoUOEZ8YM8VZYTKeDBngJcoOzNUc7W9+hN8y+ixKowoy3AWuQ2R1U82M/pbL7gAYMV2CZFfbYmeaPgx9MW04BWRk+ikbxsR/ewcaSCCKQl50gB1zWeuhgvKcVcVx5e/UFUjaHPp/SjXbrfdhJpef7oVhJ8wCiHgq0efhR4EwuTrDvaho2f9dEKQ5DVkefU/T58=
   app:
     develop: rv-management-dev
     master: rv-management
