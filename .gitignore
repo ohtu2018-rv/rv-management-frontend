@@ -2,3 +2,4 @@ node_modules/
 src/**/*.css
 .DS_Store
 .vscode
+.env
