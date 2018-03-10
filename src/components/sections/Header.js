@@ -20,10 +20,10 @@ class Header extends Component {
     }
 }
 
-const mapDispatchToProps = state => {
+const mapStateToProps = state => {
     return {
         isAuthenticated: state.authentication.isAuthenticated
     };
 };
 
-export default withRouter(connect(mapDispatchToProps)(Header));
+export default withRouter(connect(mapStateToProps)(Header));
