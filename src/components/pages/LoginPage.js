@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { authenticate } from '../../reducers/authenticationReducer';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { SuccessBtn } from '../buttons/Buttons';
+import './styles/LoginPage.css';
 
 class LoginPage extends Component {
 
@@ -27,7 +29,7 @@ class LoginPage extends Component {
         }
 
         return (
-            <div>
+            <div className="login-page">
                 <h1>Kirjaudu sisään</h1>
                 <form method="post" onSubmit={this.onSubmit}>
                     <label for="username">Käyttäjätunnus</label>
@@ -48,7 +50,9 @@ class LoginPage extends Component {
                             this.passwordInput = input;
                         }}
                     />
-                    <input type="submit" value="Kirjaudu sisään"/>
+                    <SuccessBtn onClick={this.onSubmit}>
+                        Kirjaudu sisään
+                    </SuccessBtn>
                 </form>
             </div>
         );

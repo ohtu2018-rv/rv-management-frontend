@@ -1,0 +1,20 @@
+@import "vars";
+
+body, html {
+  font-size: $font-baseline-size;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+  color: #444;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+  display: inline-block;
+  vertical-align: baseline;
+  font-size: $font-baseline-size;
+  padding: 11px 8px;
+  border-radius: 4px;
+  border: 1px solid #999;
+}

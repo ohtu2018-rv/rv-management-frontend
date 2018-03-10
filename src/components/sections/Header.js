@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HeaderNav from './HeaderNav';
+import HeaderUser from './HeaderUser';
 import { withRouter } from 'react-router-dom';
 
 import './styles/Header.css';
@@ -12,8 +13,8 @@ class Header extends Component {
                 <div class="header-title">
                     <h1>RV management</h1>
                 </div>
-                <HeaderNav/>
-                { this.props.isAuthenticated && <div className="user-info">USER INFO</div> }
+                { this.props.isAuthenticated && <HeaderNav/> }
+                { this.props.isAuthenticated && <HeaderUser/> }
             </header>
         );
     }
