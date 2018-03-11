@@ -5,7 +5,7 @@ import { logout } from '../../reducers/authenticationReducer';
 
 import './styles/HeaderUser.css';
 
-class HeaderUser extends Component {
+export class HeaderUser extends Component {
     render() {
         return (
             <div className="header-user">
@@ -15,13 +15,9 @@ class HeaderUser extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {};
-};
-
 const mapDispatchToProps = {
     logout
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderUser);
+export default connect(null, mapDispatchToProps)(HeaderUser);

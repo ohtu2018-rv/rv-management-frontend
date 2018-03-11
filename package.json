@@ -72,5 +72,13 @@
       "stylelint --syntax=scss",
       "git add"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/src/stories/**",
+      "!**/coverage/**"
+    ]
   }
 }

@@ -6,11 +6,11 @@ import { withRouter } from 'react-router-dom';
 
 import './styles/Header.css';
 
-class Header extends Component {
+export class Header extends Component {
     render() {
         return (
             <header className="topheader">
-                <div class="header-title">
+                <div className="header-title">
                     <h1>RV management</h1>
                 </div>
                 { this.props.isAuthenticated && <HeaderNav/> }

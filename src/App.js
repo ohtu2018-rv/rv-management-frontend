@@ -27,7 +27,7 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => (
     />
 );
 
-class App extends Component {
+export class App extends Component {
     render() {
         return (
             <Router>
@@ -35,6 +35,11 @@ class App extends Component {
                     <Header/>
                     <AuthenticatedRoute 
                         exact path="/" 
+                        component={(props) => <Redirect to="/products"/>}
+                        isAuthenticated={this.props.isAuthenticated}
+                    />
+                    <AuthenticatedRoute 
+                        path="/products" 
                         component={ProductListPage}
                         isAuthenticated={this.props.isAuthenticated}
                     />

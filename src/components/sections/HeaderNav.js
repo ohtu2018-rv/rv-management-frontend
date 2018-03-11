@@ -4,13 +4,13 @@ import './styles/HeaderNav.css';
 
 const activeClass = 'header-nav-active';
 
-class HeaderNav extends Component {
+export class HeaderNav extends Component {
     render() {
         return (
             <div className="header-nav">
                 <ul>
                     <li>
-                        <NavLink exact to="/" activeClassName={activeClass}>Tuotteet</NavLink>
+                        <NavLink to="/products" activeClassName={activeClass}>Tuotteet</NavLink>
                     </li>
                     <li>
                         <NavLink to="/users" activeClassName={activeClass}>Käyttäjät</NavLink>

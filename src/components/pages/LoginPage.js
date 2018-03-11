@@ -3,13 +3,18 @@ import { authenticate } from '../../reducers/authenticationReducer';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { SuccessBtn } from '../buttons/Buttons';
+import { Row, Col } from 'react-flexbox-grid';
 import './styles/LoginPage.css';
 
-class LoginPage extends Component {
+export class LoginPage extends Component {
 
     constructor(props) {
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        !this.props.isAuthenticated && this.usernameInput.focus();
     }
 
     onSubmit(event) {
@@ -30,30 +35,34 @@ class LoginPage extends Component {
 
         return (
             <div className="login-page">
-                <h1>Kirjaudu sisään</h1>
-                <form method="post" onSubmit={this.onSubmit}>
-                    <label for="username">Käyttäjätunnus</label>
-                    <input 
-                        id="username" 
-                        name="username" 
-                        type="text"
-                        ref={input => {
-                            this.usernameInput = input;
-                        }}
-                    />
-                    <label for="password">Salasana</label>
-                    <input 
-                        id="password" 
-                        name="password" 
-                        type="password"
-                        ref={input => {
-                            this.passwordInput = input;
-                        }}
-                    />
-                    <SuccessBtn onClick={this.onSubmit}>
-                        Kirjaudu sisään
-                    </SuccessBtn>
-                </form>
+                <Row around="xs">
+                    <Col xs={12} md={6} lg={4}>
+                        <h1>Kirjaudu sisään</h1>
+                        <form method="post" onSubmit={this.onSubmit}>
+                            <label htmlFor="username">Käyttäjätunnus</label>
+                            <input 
+                                id="username" 
+                                name="username" 
+                                type="text"
+                                ref={input => {
+                                    this.usernameInput = input;
+                                }}
+                            />
+                            <label htmlFor="password">Salasana</label>
+                            <input 
+                                id="password" 
+                                name="password" 
+                                type="password"
+                                ref={input => {
+                                    this.passwordInput = input;
+                                }}
+                            />
+                            <SuccessBtn onClick={this.onSubmit}>
+                                Kirjaudu sisään
+                            </SuccessBtn>
+                        </form>
+                    </Col>
+                </Row>
             </div>
         );
     }
