@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import './styles/ProductList.css';
+
+import { setProductSelected } from '../../reducers/productReducer';
 
 export class ProductList extends Component {
     render() {
@@ -12,13 +13,14 @@ export class ProductList extends Component {
                     {this.props.products &&
                         this.props.products.map(product => (
                             <button
+                                key={product.id}
                                 className={
-                                    product.id == this.props.active
+                                    product.id === this.props.active
                                         ? 'product active'
                                         : 'product'
                                 }
                                 onClick={() =>
-                                    this.props.onProductClick(product.id)
+                                    this.props.setProductSelected(product.id)
                                 }
                             >
                                 {product.name}
@@ -30,8 +32,14 @@ export class ProductList extends Component {
     }
 }
 
-const mapStateToProps = state => ({});
+const mapDispatchToProps = {
+    setProductSelected
+};
 
-const mapDispatchToProps = {};
+const mapStateToProps = (state) => {
+    return {
+        products: state.product.products
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

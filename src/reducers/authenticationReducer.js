@@ -36,7 +36,6 @@ export const authenticationFailure = error => {
 export const authenticate = (username, password) => {
     return async dispatch => {
         dispatch(setAuthenticating(true));
-
         // dummy auth for now
         return new Promise((resolve, reject) => {
             if (username === 'admin' && password === 'admin') {
