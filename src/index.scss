@@ -1,8 +1,15 @@
 @import "vars";
 
-body, html {
+body,
+html {
   font-size: $font-baseline-size;
   background: $body-background;
+}
+
+textarea,
+input,
+button {
+  outline: none;
 }
 
 label {
@@ -11,7 +18,9 @@ label {
   color: #444;
 }
 
-input[type="text"], input[type="password"], input[type="email"] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   display: inline-block;
   vertical-align: baseline;
   font-size: $font-baseline-size;
