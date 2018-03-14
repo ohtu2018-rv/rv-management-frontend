@@ -5,12 +5,6 @@ export const productActions = {
 export const initialState = {
     selectedProduct: 0,
     products: [
-        // *** Mby make default to item with id 1.
-        {
-            id: 0,
-            name: 'No product selected.'
-        },
-        // ***
         {
             id: 1,
             name: 'Twix'

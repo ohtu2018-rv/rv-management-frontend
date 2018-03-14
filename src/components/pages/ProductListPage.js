@@ -2,27 +2,27 @@ import React, { Component } from 'react';
 import ProductList from './../sections/ProductList';
 import SingleProduct from './../sections/SingleProduct';
 import { connect } from 'react-redux';
+import { Row, Col } from 'react-flexbox-grid';
+import './styles/ProductListPage.css';
 
 export class ProductListPage extends Component {
     render() {
         return (
-            <div>
-                <div style={{ float: 'left', width: '50%' }}>
-                    <ProductList
-                        active={this.props.activeProduct}
-                    />
-                </div>
-                <div style={{ float: 'right', width: '50%', textAlign: 'center' }}>
-                    <SingleProduct productId={this.props.activeProduct} />
-                </div>
+            <div className="productListPage">
+                <Row>
+                    <Col xs={3}>
+                        <ProductList active={this.props.activeProduct} />
+                    </Col>
+                    <Col xs={9}>
+                        <SingleProduct productId={this.props.activeProduct} />
+                    </Col>
+                </Row>
             </div>
         );
     }
 }
 
-const mapDispatchToProps = {
-    
-};
+const mapDispatchToProps = {};
 
 const mapStateToProps = state => {
     return {
