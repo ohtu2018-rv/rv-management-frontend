@@ -12,11 +12,13 @@ import App from './App';
 // Import reducers
 import authenticationReducer from './reducers/authenticationReducer';
 import productReducer from './reducers/productReducer';
+import productMarginReducer from './reducers/productMarginReducer';
 
 // Combine reducers
 const reducer = combineReducers({
     authentication: authenticationReducer,
-    product: productReducer
+    product: productReducer,
+    productMargin: productMarginReducer
 });
 
 // Create store

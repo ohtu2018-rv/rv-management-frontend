@@ -10,6 +10,9 @@ export class ProductList extends Component {
         return (
             <div className="products">
                 <div className="product-container">
+                    <button className="product" disabled>
+                        Nimi (varastosaldo)
+                    </button>
                     {this.props.products &&
                         this.props.products.map(product => (
                             <button
@@ -23,7 +26,9 @@ export class ProductList extends Component {
                                     this.props.setProductSelected(product.id)
                                 }
                             >
-                                {product.name}
+                                {product.name} {' ('}
+                                {product.stock}
+                                {') '}
                             </button>
                         ))}
                 </div>
@@ -36,7 +41,7 @@ const mapDispatchToProps = {
     setProductSelected
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         products: state.product.products
     };
