@@ -1,51 +1,13 @@
+import productService from '../services/productService';
+
 export const productActions = {
-    SET_PRODUCT_SELECTED: 'SET_PRODUCT_SELECTED'
+    SET_PRODUCT_SELECTED: 'SET_PRODUCT_SELECTED',
+    SET_PRODUCTS: 'SET_PRODUCTS'
 };
 
 export const initialState = {
     selectedProduct: 0,
-    products: [
-        {
-            id: 1,
-            name: 'Twix'
-        },
-        {
-            id: 2,
-            name: 'Tupla'
-        },
-        {
-            id: 3,
-            name: 'Mars'
-        },
-        {
-            id: 4,
-            name: 'Snickers'
-        },
-        {
-            id: 5,
-            name: 'Toblerone'
-        },
-        {
-            id: 6,
-            name: 'Dacapo'
-        },
-        {
-            id: 7,
-            name: 'Jim'
-        },
-        {
-            id: 8,
-            name: 'Marianne'
-        },
-        {
-            id: 9,
-            name: 'Milka'
-        },
-        {
-            id: 10,
-            name: 'Oreo'
-        }
-    ]
+    products: []
 };
 
 export const setProductSelected = id => {
@@ -55,8 +17,20 @@ export const setProductSelected = id => {
     };
 };
 
+export const getProducts = (token) => {
+    return async dispatch => {
+        const products = await productService.getAll(token);
+        dispatch({
+            type: productActions.SET_PRODUCTS,
+            products: products
+        });
+    };
+};
+
 const productReducer = (state = initialState, action) => {
     switch (action.type) {
+    case productActions.SET_PRODUCTS:
+        return Object.assign({}, state, { products: action.products });
     case productActions.SET_PRODUCT_SELECTED:
         return Object.assign({}, state, { selectedProduct: action.selectedProduct });
     default:

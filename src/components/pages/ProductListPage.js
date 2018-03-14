@@ -4,8 +4,15 @@ import SingleProduct from './../sections/SingleProduct';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import './styles/ProductListPage.css';
+import { getProducts } from '../../reducers/productReducer';
 
 export class ProductListPage extends Component {
+
+    componentWillMount() {
+        console.log(this.props.token);
+        this.props.getProducts(this.props.token);
+    }
+
     render() {
         return (
             <div className="productListPage">
@@ -22,11 +29,14 @@ export class ProductListPage extends Component {
     }
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    getProducts
+};
 
 const mapStateToProps = state => {
     return {
-        activeProduct: state.product.selectedProduct
+        activeProduct: state.product.selectedProduct,
+        token: state.authentication.accessToken
     };
 };
 
