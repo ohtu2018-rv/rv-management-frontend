@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const authenticationActions = {
     SET_AUTHENTICATING: 'SET_AUTHENTICATING',
     AUTHENTICATION_SUCCESS: 'AUTHENTICATION_SUCCESS',
@@ -37,24 +39,44 @@ export const authenticate = (username, password) => {
     return async dispatch => {
         dispatch(setAuthenticating(true));
 
-        // dummy auth for now
-        return new Promise((resolve, reject) => {
-            if (username === 'admin' && password === 'admin') {
-                resolve('access token');
-            } else {
-                reject('authentication failed');
+        try {
+            const res = await axios.post(
+                `${process.env.REACT_APP_BACKEND_URL}/api/v1/admin/authenticate`,
+                {
+                    username: username,
+                    password: password
+                }
+            );
+
+            // store token in session storage
+            window.sessionStorage.setItem('rvadmintoken', res.data.access_token);
+
+            dispatch(setAuthenticating(false));
+            dispatch(authenticationSuccess(res.data.access_token));
+        }
+        catch (error) {
+            dispatch(setAuthenticating(false));
+
+            const errorCode = error.response.data.error_code;
+
+            if (errorCode) {
+                switch (errorCode) {
+                case 'invalid_credentials':
+                    dispatch(authenticationFailure('Väärä käyttäjätunnus tai salasana'));
+                    break;
+                default:
+                    dispatch(authenticationFailure('Tuntematon virhe kirjautumisessa'));
+                    break;
+                }
             }
-        }).then((token) => {
-            dispatch(setAuthenticating(false));
-            dispatch(authenticationSuccess(token));
-        }).catch((err) => {
-            dispatch(setAuthenticating(false));
-            dispatch(authenticationFailure(err));
-        });
+        }
     };
 };
 
 export const logout = () => {
+    // delete token
+    window.sessionStorage.removeItem('rvadmintoken');
+
     return {
         type: authenticationActions.LOGOUT
     };

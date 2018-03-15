@@ -9,6 +9,9 @@ import {
 import authenticationReducer from '../reducers/authenticationReducer';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
+import './__mocks__/storageMock';
+
+jest.mock('axios');
 
 const mockStore = configureStore([thunk])(initialState);
 
@@ -22,7 +25,7 @@ describe('Authentication reducer', () => {
                 const expectedActions = [
                     setAuthenticating(true),
                     setAuthenticating(false),
-                    authenticationFailure('authentication failed')
+                    authenticationFailure('Väärä käyttäjätunnus tai salasana')
                 ];
     
                 expect(actions).toEqual(expectedActions);

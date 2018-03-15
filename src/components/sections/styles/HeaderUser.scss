@@ -1,7 +1,9 @@
 @import "vars";
 
 .header-user {
+  display: flex;
   margin-left: auto;
+  padding-right: 20px;
   color: #fff;
-  padding: 12px 20px;
+  align-items: center;
 }
