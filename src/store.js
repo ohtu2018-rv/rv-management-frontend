@@ -1,10 +1,13 @@
 import authenticationReducer from './reducers/authenticationReducer';
+import productReducer from './reducers/productReducer';
+
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 // Combine reducers
 const reducer = combineReducers({
-    authentication: authenticationReducer
+    authentication: authenticationReducer,
+    product: productReducer
 });
 
 // Create store
