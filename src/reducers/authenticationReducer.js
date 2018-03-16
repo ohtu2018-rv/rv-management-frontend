@@ -57,17 +57,18 @@ export const authenticate = (username, password) => {
         catch (error) {
             dispatch(setAuthenticating(false));
 
-            const errorCode = error.response.data.error_code;
+            const errorCode = error.response ? error.response.data.error_code : null;
 
-            if (errorCode) {
-                switch (errorCode) {
-                case 'invalid_credentials':
-                    dispatch(authenticationFailure('Väärä käyttäjätunnus tai salasana'));
-                    break;
-                default:
-                    dispatch(authenticationFailure('Tuntematon virhe kirjautumisessa'));
-                    break;
-                }
+            switch (errorCode) {
+            case 'invalid_credentials':
+                dispatch(authenticationFailure('Väärä käyttäjätunnus tai salasana'));
+                break;
+            case 'not_authorized':
+                dispatch(authenticationFailure('Ei käyttöoikeutta'));
+                break;
+            default:
+                dispatch(authenticationFailure('Tuntematon virhe kirjautumisessa'));
+                break;
             }
         }
     };
