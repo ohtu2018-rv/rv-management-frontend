@@ -1,0 +1,23 @@
+.header-nav {
+  ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: block;
+    }
+
+    li a {
+      display: block;
+      padding: 22px 16px;
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    li a.header-nav-active {
+      background: #000;
+      color: #fff;
+    }
+  }
+}

@@ -1,4 +1,7 @@
 node_modules/
 src/**/*.css
+coverage/
 .DS_Store
 .vscode
+.env
+build/
