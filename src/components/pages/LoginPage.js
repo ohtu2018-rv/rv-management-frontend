@@ -38,6 +38,7 @@ export class LoginPage extends Component {
                 <Row around="xs">
                     <Col xs={12} md={6} lg={4}>
                         <h1>Kirjaudu sisään</h1>
+                        {this.props.authenticationError && <div className="error-message">{this.props.authenticationError}</div>}
                         <form method="post" onSubmit={this.onSubmit}>
                             <label htmlFor="username">Käyttäjätunnus</label>
                             <input 
@@ -74,7 +75,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.authentication.isAuthenticated
+        isAuthenticated: state.authentication.isAuthenticated,
+        authenticationError: state.authentication.authenticationError
     };
 };
 
