@@ -1,5 +1,9 @@
 @import "vars";
 
+html {
+  overflow-y: scroll;
+}
+
 body,
 html {
   font-size: $font-baseline-size;
@@ -28,4 +32,8 @@ input[type="email"] {
   border-radius: 4px;
   border: 1px solid #999;
   background: #fff;
+}
+
+.app {
+  margin-top: 80px;
 }

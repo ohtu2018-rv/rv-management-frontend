@@ -1,69 +1,33 @@
 import React, { Component } from 'react';
 import ProductList from './../sections/ProductList';
-
-const products = [
-    {
-        id: 1,
-        name: 'Twix'
-    },
-    {
-        id: 2,
-        name: 'Tupla'
-    },
-    {
-        id: 3,
-        name: 'Mars'
-    },
-    {
-        id: 4,
-        name: 'Snickers'
-    },
-    {
-        id: 5,
-        name: 'Toblerone'
-    },
-    {
-        id: 6,
-        name: 'Dacapo'
-    },
-    {
-        id: 7,
-        name: 'Jim'
-    },
-    {
-        id: 8,
-        name: 'Marianne'
-    },
-    {
-        id: 9,
-        name: 'Milka'
-    },
-    {
-        id: 10,
-        name: 'Oreo'
-    }
-];
+import SingleProduct from './../sections/SingleProduct';
+import { connect } from 'react-redux';
+import { Row, Col } from 'react-flexbox-grid';
+import './styles/ProductListPage.css';
 
 export class ProductListPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeProduct: null
-        };
-    }
-
-    onProductClick = (productId) => {
-        this.setState({ activeProduct: productId });
-    }
     render() {
         return (
-            <ProductList
-                products={products}
-                active={this.state.activeProduct}
-                onProductClick={this.onProductClick}
-            />
+            <div className="productListPage">
+                <Row>
+                    <Col xs={3}>
+                        <ProductList active={this.props.activeProduct} />
+                    </Col>
+                    <Col xs={9}>
+                        <SingleProduct productId={this.props.activeProduct} />
+                    </Col>
+                </Row>
+            </div>
         );
     }
 }
 
-export default ProductListPage;
+const mapDispatchToProps = {};
+
+const mapStateToProps = state => {
+    return {
+        activeProduct: state.product.selectedProduct
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListPage);

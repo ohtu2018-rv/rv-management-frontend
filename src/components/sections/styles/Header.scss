@@ -1,6 +1,8 @@
 @import 'vars';
 
 .topheader {
+  position: fixed;
+  top: 0;
   display: flex;
   width: 100%;
   background: $header-background;

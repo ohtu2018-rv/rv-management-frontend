@@ -5,7 +5,14 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { ProductList } from '../components/sections/ProductList';
 
-const mockStore = configureStore([])({});
+const mockStore = configureStore([])({
+    authentication: {
+        isAuthenticated: true
+    },
+    product: {
+        products: []
+    }
+});
 
 describe('Product list page', () => {
     it('renders without crashing', () => {
