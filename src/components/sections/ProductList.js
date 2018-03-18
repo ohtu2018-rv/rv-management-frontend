@@ -10,7 +10,7 @@ export class ProductList extends Component {
         return (
             <div className="products">
                 <div className="product-container">
-                    {this.props.products != false &&
+                    {this.props.products &&
                         this.props.products.map(product => (
                             <button
                                 key={product.product_id}
