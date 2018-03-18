@@ -8,7 +8,6 @@ import { getProducts } from '../../reducers/productReducer';
 
 export class ProductListPage extends Component {
     componentWillMount() {
-        console.log(this.props.token);
         this.props.getProducts(this.props.token);
     }
 

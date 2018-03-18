@@ -28,7 +28,7 @@ export class SingleProduct extends Component {
                 <div className="row">
                     <div className="label">Nimi</div>
                     <div className="data">
-                        {this.props.product && this.props.product.name}
+                        {this.props.product && this.props.product.product_name}
                     </div>
                 </div>
                 <div className="row">
@@ -109,8 +109,8 @@ const mapDispatchToProps = {};
 
 const mapStateToProps = (state, props) => {
     return {
-        product: state.product.products.find(
-            product => product.id === props.productId
+        product: state.product.products.products.find( // lol
+            product => product.product_id === props.productId
         )
     };
 };

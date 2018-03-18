@@ -10,20 +10,20 @@ export class ProductList extends Component {
         return (
             <div className="products">
                 <div className="product-container">
-                    {this.props.products &&
+                    {this.props.products != false &&
                         this.props.products.map(product => (
                             <button
-                                key={product.id}
+                                key={product.product_id}
                                 className={
-                                    product.id === this.props.active
+                                    product.product_id === this.props.active
                                         ? 'product active'
                                         : 'product'
                                 }
                                 onClick={() =>
-                                    this.props.setProductSelected(product.id)
+                                    this.props.setProductSelected(product.product_id)
                                 }
                             >
-                                {product.name}
+                                {product.product_name}
                             </button>
                         ))}
                 </div>
@@ -38,7 +38,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
     return {
-        products: state.product.products
+        products: state.product.products.products // lol
     };
 };
 

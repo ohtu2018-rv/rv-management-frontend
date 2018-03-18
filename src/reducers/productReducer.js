@@ -7,7 +7,9 @@ export const productActions = {
 
 export const initialState = {
     selectedProduct: 0,
-    products: []
+    products: {
+        products: [] // lol
+    }
 };
 
 export const setProductSelected = id => {
