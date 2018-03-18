@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import './styles/ProductListPage.css';
 import { getProducts } from '../../reducers/productReducer';
-
+import { getGlobalMargin } from '../../reducers/productReducer';
+import NewGlobalMargin from '../sections/NewGlobalMargin'
 export class ProductListPage extends Component {
     componentWillMount() {
         this.props.getProducts(this.props.token);
+        this.props.getGlobalMargin(this.props.token)
     }
 
     render() {
@@ -21,6 +23,7 @@ export class ProductListPage extends Component {
                     <Col xs={9}>
                         <SingleProduct productId={this.props.activeProduct} />
                     </Col>
+                    <NewGlobalMargin />
                 </Row>
             </div>
         );
@@ -29,7 +32,8 @@ export class ProductListPage extends Component {
 
 
 const mapDispatchToProps = {
-    getProducts
+    getProducts,
+    getGlobalMargin
 };
 
 const mapStateToProps = state => {

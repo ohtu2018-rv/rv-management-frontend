@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import './styles/ProductList.css';
 
 import { setProductSelected } from '../../reducers/productReducer';
-
 export class ProductList extends Component {
     render() {
         return (
