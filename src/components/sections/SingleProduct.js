@@ -17,7 +17,7 @@ export class SingleProduct extends Component {
 
     render() {
         if (!this.props.product) {
-            return <div className="product-info">Valitse tuote.</div>;
+            return <div className="product-info">Valitse tuote tai lue viivakoodi.</div>;
         }
         return (
             <div className="product-info">
