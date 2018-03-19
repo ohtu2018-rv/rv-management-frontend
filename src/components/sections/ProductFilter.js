@@ -2,32 +2,41 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './styles/ProductFilter.css';
+import {
+    sortByValue,
+    productFilterType
+} from '../../reducers/productFilterReducer';
 
 export class ProductFilter extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: 'NAME_ASC'
-        };
-    }
     change(event) {
-        this.setState({ value: event.target.value });
+        this.props.sortByValue(event.target.value);
     }
     render() {
         return (
             <div className="productFilter">
                 <div className="title">Sort</div>
                 <div className="dropdown">
-                    <select onChange={(event) => this.change(event)} value={this.state.value}>
-                        <option>--</option>
-                        <option value="NAME_ASC">Name (asc)</option>
-                        <option value="NAME_DESC">Name (desc)</option>
-                        <option value="STOCK_LOW">Stock (low to high)</option>
-                        <option value="STOCK_HIGH">Stock (high to low)</option>
-                        <option value="MOST_BOUGHT_HIGH">
+                    <select
+                        onChange={event => this.change(event)}
+                        value={this.props.sortedBy}
+                    >
+                        <option value={productFilterType.NONE}>--</option>
+                        <option value={productFilterType.NAME_ASC}>
+                            Name (asc)
+                        </option>
+                        <option value={productFilterType.NAME_DESC}>
+                            Name (desc)
+                        </option>
+                        <option value={productFilterType.STOCK_LOW}>
+                            Stock (low to high)
+                        </option>
+                        <option value={productFilterType.STOCK_HIGH}>
+                            Stock (high to low)
+                        </option>
+                        <option value={productFilterType.MOST_BOUGHT_LOW}>
                             Most bought (high to low)
                         </option>
-                        <option value="MOST_BOUGHT_LOW">
+                        <option value={productFilterType.MOST_BOUGHT_HIGH}>
                             Most bought (high to low)
                         </option>
                     </select>
@@ -37,8 +46,12 @@ export class ProductFilter extends Component {
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    sortedBy: state.productFilter.sortedBy
+});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    sortByValue
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductFilter);
