@@ -8,12 +8,33 @@ import { connect } from 'react-redux';
 import ProductListPage from './components/pages/ProductListPage';
 import LoginPage from './components/pages/LoginPage';
 import Header from './components/sections/Header';
+import store from './store';
+import { authenticationSuccess } from './reducers/authenticationReducer';
+
+const isAuthenticated = () => {
+    const loggedIn = store.getState().authentication.isAuthenticated;
+
+    // try to load token from storage and log in
+    if (!loggedIn) {
+        const token = window.sessionStorage.getItem('rvadmintoken');
+
+        // log in if token is found in session storage
+        if (token) {
+            store.dispatch(authenticationSuccess(token));
+            return true;
+        }
+    } else {
+        return true;
+    }
+
+    return false;
+};
 
 const AuthenticatedRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props => {
-            return rest.isAuthenticated ? (
+            return isAuthenticated() ? (
                 <Component {...props} />
             ) : (
                 <Redirect
@@ -36,12 +57,10 @@ export class App extends Component {
                     <AuthenticatedRoute 
                         exact path="/" 
                         component={(props) => <Redirect to="/products"/>}
-                        isAuthenticated={this.props.isAuthenticated}
                     />
                     <AuthenticatedRoute 
                         path="/products" 
                         component={ProductListPage}
-                        isAuthenticated={this.props.isAuthenticated}
                     />
                     <Route path="/login" component={LoginPage} />
                 </div>

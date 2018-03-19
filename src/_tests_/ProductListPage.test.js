@@ -1,25 +1,38 @@
 import React from 'react';
 import { ProductListPage } from '../components/pages/ProductListPage';
 import { mount, shallow } from 'enzyme';
-import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
+import { ProductList } from '../components/sections/ProductList';
 
 const mockStore = configureStore([])({
     authentication: {
-        isAuthenticated: false
+        isAuthenticated: true
     },
     product: {
-        products: []
+        products: [],
+        selectedProduct: null
     },
     productMargin: {
-        productMargin: 1
+        productMargin: 1.08
     }
 });
 
-it('renders without crashing', () => {
-    mount(
-        <Provider store={mockStore}>
-            <ProductListPage />
-        </Provider>
-    );
+describe('Product list page', () => {
+    it('renders without crashing', () => {
+        mount(
+            <Provider store={mockStore}>
+                <ProductListPage />
+            </Provider>
+        );
+    });
+
+    it('renders product list', () => {
+        const page = mount(
+            <Provider store={mockStore}>
+                <ProductListPage />
+            </Provider>
+        );
+        expect(page.find(ProductList).length).toBe(1);
+    });
 });
