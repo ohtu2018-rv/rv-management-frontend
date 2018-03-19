@@ -10,6 +10,7 @@ export class ProductFilter extends Component {
         };
     }
     change(event) {
+        // Tähän filter reducerin muutoskutsu
         this.setState({ value: event.target.value });
     }
     render() {
