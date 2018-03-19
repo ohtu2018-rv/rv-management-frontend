@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 import './reset.css';
@@ -9,28 +7,8 @@ import './index.css';
 
 import App from './App';
 
-// Import reducers
-import authenticationReducer from './reducers/authenticationReducer';
-import productReducer from './reducers/productReducer';
-import productMarginReducer from './reducers/productMarginReducer';
-import productFilterReducer from './reducers/productFilterReducer';
-
-// Combine reducers
-const reducer = combineReducers({
-    authentication: authenticationReducer,
-    product: productReducer,
-    productMargin: productMarginReducer,
-    productFilter: productFilterReducer
-});
-
-// Create store
-const middleware = [thunk];
-const store = createStore(
-    reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(...middleware)
-);
+// redux store
+import store from './store';
 
 // Load config
 if (process.env.NODE_ENV !== 'production') {
