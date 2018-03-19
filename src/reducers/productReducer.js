@@ -1,5 +1,3 @@
-import productMarginService from './../services/productMarginService';
-
 export const productActions = {
     SET_PRODUCT_SELECTED: 'SET_PRODUCT_SELECTED'
 };
