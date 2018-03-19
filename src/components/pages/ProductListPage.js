@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ProductList from './../sections/ProductList';
 import SingleProduct from './../sections/SingleProduct';
+import ProductFilter from './../sections/ProductFilter';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import './styles/ProductListPage.css';
@@ -11,6 +12,7 @@ export class ProductListPage extends Component {
             <div className="productListPage">
                 <Row>
                     <Col xs={3}>
+                        <ProductFilter />
                         <ProductList active={this.props.activeProduct} />
                     </Col>
                     <Col xs={9}>

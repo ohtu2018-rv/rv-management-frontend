@@ -7,43 +7,63 @@ export const initialState = {
     products: [
         {
             id: 1,
-            name: 'Twix'
+            name: 'Twix',
+            amount: 1,
+            stock: 100
         },
         {
             id: 2,
-            name: 'Tupla'
+            name: 'Tupla',
+            amount: 1,
+            stock: 10
         },
         {
             id: 3,
-            name: 'Mars'
+            name: 'Mars',
+            amount: 10,
+            stock: -5000
         },
         {
             id: 4,
-            name: 'Snickers'
+            name: 'Snickers',
+            amount: 1,
+            stock: 1000
         },
         {
             id: 5,
-            name: 'Toblerone'
+            name: 'Toblerone',
+            amount: 1,
+            stock: 10
         },
         {
             id: 6,
-            name: 'Dacapo'
+            name: 'Dacapo',
+            amount: 1,
+            stock: 100
         },
         {
             id: 7,
-            name: 'Jim'
+            name: 'Jim',
+            amount: 1,
+            stock: 100
         },
         {
             id: 8,
-            name: 'Marianne'
+            name: 'Marianne',
+            amount: 1,
+            stock: 100
         },
         {
             id: 9,
-            name: 'Milka'
+            name: 'Milka',
+            amount: 1,
+            stock: 100
         },
         {
             id: 10,
-            name: 'Oreo'
+            name: 'Oreo',
+            amount: 1,
+            stock: 100
         }
     ]
 };
@@ -58,7 +78,9 @@ export const setProductSelected = id => {
 const productReducer = (state = initialState, action) => {
     switch (action.type) {
     case productActions.SET_PRODUCT_SELECTED:
-        return Object.assign({}, state, { selectedProduct: action.selectedProduct });
+        return Object.assign({}, state, {
+            selectedProduct: action.selectedProduct
+        });
     default:
         return state;
     }
