@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles/SingleProduct.css';
 import twix from './../../images/twix.png';
+import { fetchProductMargin } from './../../reducers/productMarginReducer';
 
 export class SingleProduct extends Component {
     constructor(props) {
@@ -11,8 +12,16 @@ export class SingleProduct extends Component {
         };
     }
 
+    componentWillMount() {
+        this.props.fetchProductMargin();
+    }
+
     sisaanOsto() {
         this.setState({ sisaanostoClicked: !this.state.sisaanostoClicked });
+    }
+
+    isBox() {
+        return this.props.product && this.props.product.amount > 1;
     }
 
     render() {
@@ -21,14 +30,56 @@ export class SingleProduct extends Component {
         }
         return (
             <div className="product-info">
-                <div className="product-image">
+                <div
+                    className={
+                        !this.isBox() ? 'product-image' : 'product-image is-box'
+                    }
+                >
                     <img src={twix} alt="Twix" />
                 </div>
+                {this.isBox() && (
+                    <React.Fragment>
+                        <div className="row title">Laatikon tiedot</div>
+                        <div className="row">
+                            <div className="label">Laatikon sisäänosto</div>
+                            <div className="data">
+                                <input type="number" step=".01" value="40.00" />{' '}
+                                €
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div className="label">Tuotteita / laatikko</div>
+                            <div className="data">
+                                <input
+                                    type="number"
+                                    step="1"
+                                    value="40"
+                                    min="1"
+                                    disabled
+                                />{' '}
+                                kpl
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="label">Laatikkojen lkm</div>
+                            <div className="data">
+                                <input
+                                    type="number"
+                                    step="1"
+                                    value="1"
+                                    min="1"
+                                />{' '}
+                                kpl
+                            </div>
+                        </div>
+                    </React.Fragment>
+                )}
                 <div className="row title">Tuotteen tiedot</div>
                 <div className="row">
                     <div className="label">Nimi</div>
                     <div className="data">
-                        {this.props.product && this.props.product.name}
+                        {this.props.product && this.props.product.name}{' '}
+                        {this.isBox() && ' (laatikko)'}
                     </div>
                 </div>
                 <div className="row">
@@ -41,11 +92,13 @@ export class SingleProduct extends Component {
                         Kullanvärisellä kuorella varustettu makuelämys.
                     </div>
                 </div>
-                {this.state.sisaanostoClicked ? (
+                {this.state.sisaanostoClicked || this.isBox() ? (
                     <React.Fragment>
                         <div className="row title">Sisäänosto</div>
                         <div className="row">
-                            <div className="label">Sisäänostohinta</div>
+                            <div className="label">
+                                Sisäänostohinta {this.isBox() && ' (1 tuote)'}
+                            </div>
                             <div className="data">
                                 <input type="number" step=".01" value="1.00" />{' '}
                                 €
@@ -57,33 +110,44 @@ export class SingleProduct extends Component {
                                 <input
                                     type="number"
                                     step=".01"
-                                    value="8.00"
+                                    value={this.props.productMargin}
                                     min="0"
                                 />{' '}
                                 %
                             </div>
                         </div>
                         <div className="row">
-                            <div className="label">Myyntihinta</div>
+                            <div className="label">
+                                Myyntihinta {this.isBox() && ' (1 tuote)'}
+                            </div>
                             <div className="data">
                                 <input type="number" step=".01" value="1.08" />{' '}
                                 €
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="label">Lukumäärä</div>
-                            <div className="data">
-                                <input
-                                    type="number"
-                                    step="1"
-                                    value="1"
-                                    min="1"
-                                />{' '}
-                                kpl
+                        {this.isBox() || (
+                            <div className="row">
+                                <div className="label">Lukumäärä</div>
+                                <div className="data">
+                                    <input
+                                        type="number"
+                                        step="1"
+                                        value="1"
+                                        min="1"
+                                    />{' '}
+                                    kpl
+                                </div>
                             </div>
-                        </div>
+                        )}
                         <div className="row btn-row">
-                            <button className="cancel-btn" onClick={() => this.sisaanOsto()}>Peruuta</button>
+                            {this.isBox() || (
+                                <button
+                                    className="cancel-btn"
+                                    onClick={() => this.sisaanOsto()}
+                                >
+                                    Peruuta
+                                </button>
+                            )}
                             <button className="purchase-btn">
                                 Osta sisään
                             </button>
@@ -105,13 +169,16 @@ export class SingleProduct extends Component {
     }
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    fetchProductMargin
+};
 
 const mapStateToProps = (state, props) => {
     return {
         product: state.product.products.find(
             product => product.id === props.productId
-        )
+        ),
+        productMargin: state.productMargin.productMargin
     };
 };
 
