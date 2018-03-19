@@ -8,7 +8,7 @@ export class SingleProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sisaanostoClicked: false
+            buyInClicked: false
         };
     }
 
@@ -16,8 +16,8 @@ export class SingleProduct extends Component {
         this.props.fetchProductMargin();
     }
 
-    sisaanOsto() {
-        this.setState({ sisaanostoClicked: !this.state.sisaanostoClicked });
+    buyIn() {
+        this.setState({ buyInClicked: !this.state.buyInClicked });
     }
 
     isBox() {
@@ -143,7 +143,7 @@ export class SingleProduct extends Component {
                             {this.isBox() || (
                                 <button
                                     className="cancel-btn"
-                                    onClick={() => this.sisaanOsto()}
+                                    onClick={() => this.buyIn()}
                                 >
                                     Peruuta
                                 </button>
@@ -158,7 +158,7 @@ export class SingleProduct extends Component {
                         <button className="cancel-btn">Muokkaa</button>
                         <button
                             className="purchase-btn"
-                            onClick={() => this.sisaanOsto()}
+                            onClick={() => this.buyIn()}
                         >
                             Tee sisäänosto
                         </button>
