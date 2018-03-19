@@ -1,5 +1,5 @@
 import productService from '../services/productService';
-import marginService from '../services/globalMarginService'
+import marginService from '../services/globalMarginService';
 
 export const productActions = {
     SET_PRODUCT_SELECTED: 'SET_PRODUCT_SELECTED',
@@ -17,8 +17,8 @@ export const initialState = {
 
 // Needs an API-call
 export const setGlobalMargin = (newMargin, token) => {
-    return async dispatch  => {
-        const margin = await marginService.changeMargin(newMargin, token)
+    return async dispatch => {
+        const margin = await marginService.changeMargin(newMargin, token);
         dispatch({
             type: productActions.SET_GLOBAL_MARGIN,
             globalMargin: margin.margin
@@ -33,7 +33,7 @@ export const setProductSelected = id => {
     };
 };
 
-export const getGlobalMargin = (token) => {
+export const getGlobalMargin = token => {
     return async dispatch => {
         const margin = await marginService.getMargin(token);
         dispatch({
@@ -43,7 +43,7 @@ export const getGlobalMargin = (token) => {
     };
 };
 
-export const getProducts = (token) => {
+export const getProducts = token => {
     return async dispatch => {
         const products = await productService.getAll(token);
         dispatch({
@@ -58,9 +58,13 @@ const productReducer = (state = initialState, action) => {
     case productActions.SET_PRODUCTS:
         return Object.assign({}, state, { products: action.products });
     case productActions.SET_GLOBAL_MARGIN:
-        return Object.assign({}, state, { globalMargin: action.globalMargin });
+        return Object.assign({}, state, {
+            globalMargin: action.globalMargin
+        });
     case productActions.SET_PRODUCT_SELECTED:
-        return Object.assign({}, state, { selectedProduct: action.selectedProduct });
+        return Object.assign({}, state, {
+            selectedProduct: action.selectedProduct
+        });
     default:
         return state;
     }
