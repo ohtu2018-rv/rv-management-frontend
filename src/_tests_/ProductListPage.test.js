@@ -5,6 +5,7 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { ProductList } from '../components/sections/ProductList';
 import store from './../store';
+import renderer from 'react-test-renderer';
 const mockStore = store;
 
 describe('Product list page', () => {
@@ -14,6 +15,15 @@ describe('Product list page', () => {
                 <ProductListPage />
             </Provider>
         );
+
+        const productList = renderer
+            .create(
+                <Provider store={mockStore}>
+                    <ProductListPage />
+                </Provider>
+            )
+            .toJSON();
+        expect(productList).toMatchSnapshot();
     });
 
     it('renders product list', () => {

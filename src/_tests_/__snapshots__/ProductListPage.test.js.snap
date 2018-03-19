@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Product list page renders without crashing 1`] = `
+<div
+  className="productListPage"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-xs-12"
+    >
+      <div
+        style={
+          Object {
+            "backgroundColor": "#C9C9C9",
+            "padding": 10,
+          }
+        }
+      >
+        Barcode: 
+        
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="col-xs-3"
+    >
+      <div
+        className="productFilter"
+      >
+        <div
+          className="title"
+        >
+          Sort
+        </div>
+        <div
+          className="dropdown"
+        >
+          <select
+            onChange={[Function]}
+            value="SORT_NAME_ASC"
+          >
+            <option
+              value="NONE"
+            >
+              --
+            </option>
+            <option
+              value="SORT_NAME_ASC"
+            >
+              Name (asc)
+            </option>
+            <option
+              value="SORT_NAME_DESC"
+            >
+              Name (desc)
+            </option>
+            <option
+              value="STOCK_LOW"
+            >
+              Stock (low to high)
+            </option>
+            <option
+              value="STOCK_HIGH"
+            >
+              Stock (high to low)
+            </option>
+            <option
+              value="MOST_BOUGHT_LOW"
+            >
+              Most bought (high to low)
+            </option>
+            <option
+              value="MOST_BOUGHT_HIGH"
+            >
+              Most bought (high to low)
+            </option>
+          </select>
+        </div>
+      </div>
+      <div
+        className="products"
+      >
+        <div
+          className="product-container"
+        >
+          <button
+            className="product"
+            disabled={true}
+          >
+            Nimi (varastosaldo)
+          </button>
+          <button
+            className="product"
+            onClick={[Function]}
+          >
+            Dacapo
+             
+             (
+            100
+            ) 
+          </button>
+          <button
+            className="product"
+            onClick={[Function]}
+          >
+            Jim
+             
+             (
+            100
+            ) 
+          </button>
+          <button
+            className="product"
+            onClick={[Function]}
+          >
+            Marianne
+             
+             (
+            100
+            ) 
+          </button>
+          <button
+            className="product"
+            onClick={[Function]}
+          >
+            Mars
+             
+             (
+            -5000
+            ) 
+          </button>
+          <button
+            className="product"
+            onClick={[Function]}
+          >
+            Milka
+             
+             (
+            100
+            ) 
+          </button>
+          <button
+            className="product"
+            onClick={[Function]}
+          >
+            Oreo
+             
+             (
+            100
+            ) 
+          </button>
+          <button
+            className="product"
+            onClick={[Function]}
+          >
+            Snickers
+             
+             (
+            1000
+            ) 
+          </button>
+          <button
+            className="product"
+            onClick={[Function]}
+          >
+            Toblerone
+             
+             (
+            10
+            ) 
+          </button>
+          <button
+            className="product"
+            onClick={[Function]}
+          >
+            Tupla
+             
+             (
+            10
+            ) 
+          </button>
+          <button
+            className="product"
+            onClick={[Function]}
+          >
+            Twix
+             
+             (
+            100
+            ) 
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col-xs-9"
+    >
+      <div
+        className="product-info"
+      >
+        Valitse tuote tai lue viivakoodi.
+      </div>
+    </div>
+  </div>
+</div>
+`;
