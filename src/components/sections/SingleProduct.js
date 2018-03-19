@@ -47,7 +47,7 @@ export class SingleProduct extends Component {
                                 €
                             </div>
                         </div>
-                        <div class="row">
+                        <div className="row">
                             <div className="label">Tuotteita / laatikko</div>
                             <div className="data">
                                 <input
@@ -92,7 +92,7 @@ export class SingleProduct extends Component {
                         Kullanvärisellä kuorella varustettu makuelämys.
                     </div>
                 </div>
-                {this.state.sisaanostoClicked || this.isBox() ? (
+                {this.state.buyInClicked || this.isBox() ? (
                     <React.Fragment>
                         <div className="row title">Sisäänosto</div>
                         <div className="row">

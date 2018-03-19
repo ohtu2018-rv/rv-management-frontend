@@ -4,23 +4,23 @@ import { connect } from 'react-redux';
 export class BarcodeListener extends Component {
     constructor(props) {
         super(props);
-        this.handleKeyPress = this.handleKeyPress.bind(this);
+
         this.state = {
             barcode: ''
         };
+
+        // this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
-    componentDidMount() {
-        console.log('Mounted BarcodeListener');
+    /*componentDidMount() {
         document.addEventListener('keypress', this.handleKeyPress);
     }
 
-    componentWillUnMount() {
-        console.log('Unmounted barcode component');
+    componentWillUnmount() {
         document.removeEventListener('keypress', this.handleKeyPress);
-    }
+    }*/
 
-    handleKeyPress(event) {
+    /* handleKeyPress(event) {
         // Valid keys: 48-57 (0-9) and 13 (Enter)
         if (
             (event.keyCode >= 48 && event.keyCode <= 57) ||
@@ -36,13 +36,24 @@ export class BarcodeListener extends Component {
                 this.setState({ barcode: this.state.barcode + event.key });
             }
         }
+    }*/
+
+    handleInputEvent(event) {
+        this.setState({ barcode: event.target.value });
     }
 
     render() {
         return (
-            <div style={{ padding: 10, backgroundColor: '#C9C9C9' }}>
-                Barcode: {this.state.barcode}
-            </div>
+            <React.Fragment>
+                Barcode:{' '}
+                <input
+                    ref={input => {
+                        input && input.focus();
+                    }}
+                    value={this.state.barcode}
+                    onChange={(event) => this.handleInputEvent(event)}
+                />
+            </React.Fragment>
         );
     }
 }

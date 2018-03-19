@@ -10,17 +10,12 @@ exports[`Product list page renders without crashing 1`] = `
     <div
       className="col-xs-12"
     >
-      <div
-        style={
-          Object {
-            "backgroundColor": "#C9C9C9",
-            "padding": 10,
-          }
-        }
-      >
-        Barcode: 
-        
-      </div>
+      Barcode:
+       
+      <input
+        onChange={[Function]}
+        value=""
+      />
     </div>
   </div>
   <div
