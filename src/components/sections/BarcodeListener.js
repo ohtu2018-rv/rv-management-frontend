@@ -42,17 +42,34 @@ export class BarcodeListener extends Component {
         this.setState({ barcode: event.target.value });
     }
 
+    handleSubmit(event) {
+        event.preventDefault();
+        this.setState({ barcode: '' });
+
+        // VIIVAKOODIN MUKAAN TEHTÄVÄ TUOTTEEN VALINTA TÄNNE
+    }
+
     render() {
         return (
             <React.Fragment>
-                Barcode:{' '}
-                <input
-                    ref={input => {
-                        input && input.focus();
-                    }}
-                    value={this.state.barcode}
-                    onChange={(event) => this.handleInputEvent(event)}
-                />
+                <form onSubmit={event => this.handleSubmit(event)}>
+                    <input
+                        style={{
+                            paddingLeft: 16,
+                            paddingRight: 16,
+                            paddingTop: 11,
+                            paddingBottom: 11,
+                            fontSize: 16,
+                            textAlign: 'center'
+                        }}
+                        ref={input => {
+                            input && input.focus();
+                        }}
+                        value={this.state.barcode}
+                        placeholder="Lue viivakoodi"
+                        onChange={event => this.handleInputEvent(event)}
+                    />
+                </form>
             </React.Fragment>
         );
     }
