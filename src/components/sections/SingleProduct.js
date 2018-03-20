@@ -110,7 +110,7 @@ export class SingleProduct extends Component {
                                 <input
                                     type="number"
                                     step=".01"
-                                    value={this.props.productMargin}
+                                    value={"" + this.props.globalMargin + ".00"}
                                     min="0"
                                 />{' '}
                                 %
@@ -176,9 +176,10 @@ const mapDispatchToProps = {
 const mapStateToProps = (state, props) => {
     return {
         product: state.product.products.find(
-            product => product.id === props.productId
+            product => product.product_id === props.productId
         ),
-        productMargin: state.productMargin.productMargin
+        productMargin: state.productMargin.productMargin,
+        globalMargin: state.product.globalMargin
     };
 };
 
