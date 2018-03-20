@@ -109,7 +109,7 @@ const mapDispatchToProps = {};
 
 const mapStateToProps = (state, props) => {
     return {
-        product: state.product.products.products.find( // lol
+        product: state.product.products.find(
             product => product.product_id === props.productId
         ),
         globalMargin: state.product.globalMargin
