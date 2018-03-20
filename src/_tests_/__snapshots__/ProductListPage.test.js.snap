@@ -10,12 +10,12 @@ exports[`Product list page renders without crashing 1`] = `
     <div
       className="col-xs-12"
     >
-      Barcode:
-       
-      <input
-        onChange={[Function]}
-        value=""
-      />
+      <button
+        className="btn btn-success"
+        onClick={[Function]}
+      >
+        Lue viivakoodi
+      </button>
     </div>
   </div>
   <div
