@@ -9,9 +9,7 @@ export const productActions = {
 
 export const initialState = {
     selectedProduct: 0,
-    products: {
-        products: [] // lol
-    },
+    products: [],
     globalMargin: 0
 };
 
@@ -48,7 +46,7 @@ export const getProducts = token => {
         const products = await productService.getAll(token);
         dispatch({
             type: productActions.SET_PRODUCTS,
-            products: products
+            products: products.products
         });
     };
 };
