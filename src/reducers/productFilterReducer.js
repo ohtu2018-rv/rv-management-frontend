@@ -1,5 +1,3 @@
-import productList from './../components/sections/ProductList';
-
 export const productFilterActions = {
     SORT_BY_VALUE: 'SORT_BY_VALUE'
 };

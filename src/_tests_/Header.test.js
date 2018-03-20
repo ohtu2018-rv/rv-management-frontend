@@ -3,15 +3,21 @@ import { Header } from '../components/sections/Header';
 import { mount, shallow } from 'enzyme';
 import { HeaderNav } from '../components/sections/HeaderNav';
 import HeaderUser from '../components/sections/HeaderUser';
+import renderer from 'react-test-renderer';
 
 it('renders without crashing', () => {
-    mount(<Header/>);
+    mount(<Header />);
+    const header = renderer.create(<Header />).toJSON();
+    expect(header).toMatchSnapshot();
 });
 
 it('does not render navigation and user info when not logged in', () => {
-    const header = mount(<Header/>);
+    const header = mount(<Header />);
     expect(header.find(HeaderNav).length).toBe(0);
     expect(header.find(HeaderUser).length).toBe(0);
+
+    const header2 = renderer.create(<Header />).toJSON();
+    expect(header2).toMatchSnapshot();
 });
 
 it('renders navigation and user info when logged in', () => {

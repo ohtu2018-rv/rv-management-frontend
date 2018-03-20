@@ -38,7 +38,6 @@ export const authenticationFailure = error => {
 export const authenticate = (username, password) => {
     return async dispatch => {
         dispatch(setAuthenticating(true));
-
         try {
             const res = await axios.post(
                 `${process.env.REACT_APP_BACKEND_URL}/api/v1/admin/authenticate`,
@@ -50,7 +49,6 @@ export const authenticate = (username, password) => {
 
             // store token in session storage
             window.sessionStorage.setItem('rvadmintoken', res.data.access_token);
-
             dispatch(setAuthenticating(false));
             dispatch(authenticationSuccess(res.data.access_token));
         }
