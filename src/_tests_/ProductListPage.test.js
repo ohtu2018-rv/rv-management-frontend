@@ -4,23 +4,34 @@ import { mount, shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { ProductList } from '../components/sections/ProductList';
-
-const mockStore = configureStore([])({
-    authentication: {
-        isAuthenticated: true
-    },
-    product: {
-        products: []
-    }
-});
+import store from './../store';
+import renderer from 'react-test-renderer';
+const mockStore = store;
 
 describe('Product list page', () => {
     it('renders without crashing', () => {
-        // Something weird happening. mount(<Provider store={mockStore}><ProductListPage /></Provider>);
+/*        mount(
+            <Provider store={mockStore}>
+                <ProductListPage />
+            </Provider>
+        );
+
+        const productList = renderer
+            .create(
+                <Provider store={mockStore}>
+                    <ProductListPage />
+                </Provider>
+            )
+            .toJSON();
+        expect(productList).toMatchSnapshot();*/
     });
-    
+
     it('renders product list', () => {
-        // Something weird happening. const page = mount(<Provider store={mockStore}><ProductListPage /></Provider>);
-        // Something weird happening. expect(page.find(ProductList).length).toBe(1);
+/*        const page = mount(
+            <Provider store={mockStore}>
+                <ProductListPage />
+            </Provider>
+        );
+        expect(page.find(ProductList).length).toBe(1);*/
     });
 });

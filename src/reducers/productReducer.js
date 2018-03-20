@@ -3,6 +3,7 @@ import marginService from '../services/globalMarginService';
 
 export const productActions = {
     SET_PRODUCT_SELECTED: 'SET_PRODUCT_SELECTED',
+    SELECT_PRODUCT_BY_BARCODE: 'SELECT_PRODUCT_BY_BARCODE',
     SET_PRODUCTS: 'SET_PRODUCTS',
     SET_GLOBAL_MARGIN: 'SET_GLOBAL_MARGIN'
 };
@@ -13,10 +14,19 @@ export const initialState = {
     globalMargin: 0
 };
 
-// Needs an API-call
 export const setGlobalMargin = (newMargin, token) => {
     return async dispatch => {
         const margin = await marginService.changeMargin(newMargin, token);
+        dispatch({
+            type: productActions.SET_GLOBAL_MARGIN,
+            globalMargin: margin.margin
+        });
+    };
+};
+
+export const getGlobalMargin = token => {
+    return async dispatch => {
+        const margin = await marginService.getMargin(token);
         dispatch({
             type: productActions.SET_GLOBAL_MARGIN,
             globalMargin: margin.margin
@@ -31,19 +41,17 @@ export const setProductSelected = id => {
     };
 };
 
-export const getGlobalMargin = token => {
-    return async dispatch => {
-        const margin = await marginService.getMargin(token);
-        dispatch({
-            type: productActions.SET_GLOBAL_MARGIN,
-            globalMargin: margin.margin
-        });
+export const selectProductByBarcode = barcode => {
+    return {
+        type: productActions.SELECT_PRODUCT_BY_BARCODE,
+        barcode
     };
 };
 
 export const getProducts = token => {
     return async dispatch => {
         const products = await productService.getAll(token);
+        console.log(products.products)
         dispatch({
             type: productActions.SET_PRODUCTS,
             products: products.products

@@ -16,11 +16,22 @@ const mockStore = configureStore([])({
 describe('<App/>', () => {
     it('renders without crashing', () => {
         const div = document.createElement('div');
-        ReactDOM.render(<Provider store={mockStore}><App/></Provider>, div);
+        ReactDOM.render(
+            <Provider store={mockStore}>
+                <App />
+            </Provider>,
+            div
+        );
         ReactDOM.unmountComponentAtNode(div);
     });
 
     it('contains a header', () => {
-        expect(shallow(<Provider store={mockStore}><App/></Provider>).contains(<Header/>));
+        expect(
+            shallow(
+                <Provider store={mockStore}>
+                    <App />
+                </Provider>
+            ).contains(<Header />)
+        );
     });
 });
