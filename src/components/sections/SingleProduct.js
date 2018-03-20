@@ -21,7 +21,7 @@ export class SingleProduct extends Component {
     }
 
     isBox() {
-        return this.props.product && this.props.product.amount > 1;
+        return this.props.product && this.props.product.quantity > 1;
     }
 
     render() {
@@ -78,7 +78,7 @@ export class SingleProduct extends Component {
                 <div className="row">
                     <div className="label">Nimi</div>
                     <div className="data">
-                        {this.props.product && this.props.product.name}{' '}
+                        {this.props.product && this.props.product.product_name}{' '}
                         {this.isBox() && ' (laatikko)'}
                     </div>
                 </div>
