@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles/ProductList.css';
 
-import { setProductSelected } from '../../reducers/productReducer';
-import { productFilterType } from '../../reducers/productFilterReducer';
+import { setProductSelected } from './../../reducers/productReducer';
+import { productFilterType } from './../../reducers/productFilterReducer';
 
 const sorters = {
     [productFilterType.NONE]: (a, b) => a.id - b.id,
