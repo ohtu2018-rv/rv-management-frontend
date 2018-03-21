@@ -16,11 +16,7 @@ const sorters = {
 
     [productFilterType.STOCK_LOW]: (a, b) => a.stock - b.stock,
 
-    [productFilterType.STOCK_HIGH]: (a, b) => b.stock - a.stock,
-
-    [productFilterType.MOST_BOUGHT_LOW]: (a, b) => a.stock - b.stock,
-
-    [productFilterType.MOST_BOUGHT_HIGH]: (a, b) => b.stock - a.stock
+    [productFilterType.STOCK_HIGH]: (a, b) => b.stock - a.stock
 };
 
 export class ProductList extends Component {
