@@ -32,12 +32,6 @@ export class ProductFilter extends Component {
                         <option value={productFilterType.STOCK_HIGH}>
                             Stock (high to low)
                         </option>
-                        <option value={productFilterType.MOST_BOUGHT_LOW}>
-                            Most bought (high to low)
-                        </option>
-                        <option value={productFilterType.MOST_BOUGHT_HIGH}>
-                            Most bought (high to low)
-                        </option>
                     </select>
                 </div>
             </div>

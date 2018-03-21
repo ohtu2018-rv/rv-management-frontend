@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles/ProductList.css';
 
-import { setProductSelected } from '../../reducers/productReducer';
-import { productFilterType } from '../../reducers/productFilterReducer';
+import { setProductSelected } from './../../reducers/productReducer';
+import { productFilterType } from './../../reducers/productFilterReducer';
 
 const sorters = {
     [productFilterType.NONE]: (a, b) => a.product_id - b.product_id,
@@ -16,11 +16,7 @@ const sorters = {
 
     [productFilterType.STOCK_LOW]: (a, b) => a.stock - b.stock,
 
-    [productFilterType.STOCK_HIGH]: (a, b) => b.stock - a.stock,
-
-    [productFilterType.MOST_BOUGHT_LOW]: (a, b) => a.stock - b.stock,
-
-    [productFilterType.MOST_BOUGHT_HIGH]: (a, b) => b.stock - a.stock
+    [productFilterType.STOCK_HIGH]: (a, b) => b.stock - a.stock
 };
 
 export class ProductList extends Component {
