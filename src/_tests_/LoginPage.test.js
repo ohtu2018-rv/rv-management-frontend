@@ -7,20 +7,21 @@ import { Redirect } from 'react-router';
 describe('Login page', () => {
     it('renders without crashing', () => {
         const div = document.createElement('div');
-        ReactDOM.render(<LoginPage/>, div);
+        ReactDOM.render(<LoginPage />, div);
         ReactDOM.unmountComponentAtNode(div);
     });
 
     it('contains a login form', () => {
-        expect(mount(<LoginPage/>)
-            .find('form').length).toBe(1);
+        expect(mount(<LoginPage />).find('form').length).toBe(1);
     });
 
     it('contains inputs for username and password', () => {
-        expect(mount(<LoginPage/>)
-            .find('input[name="username"]').length).toBe(1);
-        expect(mount(<LoginPage/>)
-            .find('input[name="password"]').length).toBe(1);
+        expect(mount(<LoginPage />).find('input[name="username"]').length).toBe(
+            1
+        );
+        expect(mount(<LoginPage />).find('input[name="password"]').length).toBe(
+            1
+        );
     });
 
     it('authentication function is called after submitting form', () => {
@@ -32,8 +33,9 @@ describe('Login page', () => {
 
     it('redirects after successful login', () => {
         expect(
-            shallow(<LoginPage isAuthenticated={true} location={{}} />)
-                .find(Redirect).length
+            shallow(<LoginPage isAuthenticated={true} location={{}} />).find(
+                Redirect
+            ).length
         ).toBe(1);
     });
 });

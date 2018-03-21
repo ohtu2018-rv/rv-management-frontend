@@ -3,11 +3,9 @@ import { HeaderNav } from '../components/sections/HeaderNav';
 import { mount, shallow } from 'enzyme';
 
 it('renders without crashing', () => {
-    shallow(<HeaderNav/>);
+    shallow(<HeaderNav />);
 });
 
 it('contains navigation menu', () => {
-    expect(
-        shallow(<HeaderNav/>).find('.header-nav').length
-    ).toBe(1);
+    expect(shallow(<HeaderNav />).find('.header-nav').length).toBe(1);
 });

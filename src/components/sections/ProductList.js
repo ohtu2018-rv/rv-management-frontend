@@ -7,12 +7,12 @@ import { setProductSelected } from './../../reducers/productReducer';
 import { productFilterType } from './../../reducers/productFilterReducer';
 
 const sorters = {
-    [productFilterType.NONE]: (a, b) => a.id - b.id,
+    [productFilterType.NONE]: (a, b) => a.product_id - b.product_id,
     [productFilterType.NAME_ASC]: (a, b) =>
-        a.name < b.name ? -1 : b.name === a.name ? 0 : 1,
+        a.product_name < b.product_name ? -1 : b.product_name === a.product_name ? 0 : 1,
 
     [productFilterType.NAME_DESC]: (a, b) =>
-        a.name < b.name ? 1 : b.name === a.name ? 0 : -1,
+        a.product_name < b.product_name ? 1 : b.product_name === a.product_name ? 0 : -1,
 
     [productFilterType.STOCK_LOW]: (a, b) => a.stock - b.stock,
 
@@ -32,18 +32,18 @@ export class ProductList extends Component {
                     </button>
                     {prods.map(product => (
                         <button
-                            key={product.id}
+                            key={product.product_id}
                             className={
-                                product.id === this.props.active
+                                product.product_id === this.props.active
                                     ? 'product active'
                                     : 'product'
                             }
                             onClick={() =>
-                                this.props.setProductSelected(product.id)
+                                this.props.setProductSelected(product.product_id)
                             }
                         >
-                            {product.name} {' ('}
-                            {product.stock}
+                            {product.product_name} {' ('}
+                            {product.quantity}
                             {') '}
                         </button>
                     ))}

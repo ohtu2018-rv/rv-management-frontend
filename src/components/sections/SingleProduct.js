@@ -8,7 +8,7 @@ export class SingleProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sisaanostoClicked: false
+            buyInClicked: false
         };
     }
 
@@ -16,17 +16,17 @@ export class SingleProduct extends Component {
         this.props.fetchProductMargin();
     }
 
-    sisaanOsto() {
-        this.setState({ sisaanostoClicked: !this.state.sisaanostoClicked });
+    buyIn() {
+        this.setState({ buyInClicked: !this.state.buyInClicked });
     }
 
     isBox() {
-        return this.props.product && this.props.product.amount > 1;
+        return this.props.product && this.props.product.quantity > 1;
     }
 
     render() {
         if (!this.props.product) {
-            return <div className="product-info">Valitse tuote.</div>;
+            return <div className="product-info">Valitse tuote tai lue viivakoodi.</div>;
         }
         return (
             <div className="product-info">
@@ -47,7 +47,7 @@ export class SingleProduct extends Component {
                                 €
                             </div>
                         </div>
-                        <div class="row">
+                        <div className="row">
                             <div className="label">Tuotteita / laatikko</div>
                             <div className="data">
                                 <input
@@ -78,7 +78,7 @@ export class SingleProduct extends Component {
                 <div className="row">
                     <div className="label">Nimi</div>
                     <div className="data">
-                        {this.props.product && this.props.product.name}{' '}
+                        {this.props.product && this.props.product.product_name}{' '}
                         {this.isBox() && ' (laatikko)'}
                     </div>
                 </div>
@@ -92,7 +92,7 @@ export class SingleProduct extends Component {
                         Kullanvärisellä kuorella varustettu makuelämys.
                     </div>
                 </div>
-                {this.state.sisaanostoClicked || this.isBox() ? (
+                {this.state.buyInClicked || this.isBox() ? (
                     <React.Fragment>
                         <div className="row title">Sisäänosto</div>
                         <div className="row">
@@ -110,7 +110,7 @@ export class SingleProduct extends Component {
                                 <input
                                     type="number"
                                     step=".01"
-                                    value={this.props.productMargin}
+                                    value={"" + this.props.globalMargin + ".00"}
                                     min="0"
                                 />{' '}
                                 %
@@ -143,7 +143,7 @@ export class SingleProduct extends Component {
                             {this.isBox() || (
                                 <button
                                     className="cancel-btn"
-                                    onClick={() => this.sisaanOsto()}
+                                    onClick={() => this.buyIn()}
                                 >
                                     Peruuta
                                 </button>
@@ -158,7 +158,7 @@ export class SingleProduct extends Component {
                         <button className="cancel-btn">Muokkaa</button>
                         <button
                             className="purchase-btn"
-                            onClick={() => this.sisaanOsto()}
+                            onClick={() => this.buyIn()}
                         >
                             Tee sisäänosto
                         </button>
@@ -176,9 +176,10 @@ const mapDispatchToProps = {
 const mapStateToProps = (state, props) => {
     return {
         product: state.product.products.find(
-            product => product.id === props.productId
+            product => product.product_id === props.productId
         ),
-        productMargin: state.productMargin.productMargin
+        productMargin: state.productMargin.productMargin,
+        globalMargin: state.product.globalMargin
     };
 };
 
