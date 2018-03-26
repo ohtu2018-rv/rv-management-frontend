@@ -5,6 +5,7 @@ import twix from './../../images/twix.png';
 import { fetchProductMargin } from './../../reducers/productMarginReducer';
 import { setProductSelected } from '../../reducers/productReducer';
 import { Route, withRouter, NavLink } from 'react-router-dom';
+import ProductAddStock from './ProductAddStock';
 
 export class SingleProduct extends Component {
     constructor(props) {
@@ -12,12 +13,6 @@ export class SingleProduct extends Component {
         this.state = {
             buyInClicked: false
         };
-    }
-
-    componentWillMount() {
-        this.props.setProductSelected(
-            parseInt(this.props.match.params.productid, 10)
-        );
     }
 
     componentWillUnmount() {
@@ -40,7 +35,7 @@ export class SingleProduct extends Component {
                         <h2>{product.quantity} varastossa</h2>
                     </div>
                     <div className="product-image">
-                        <img src={twix} alt="Product image"/>
+                        <img src={twix} alt={product.product_name}/>
                     </div>
                 </div>
                 <div className="product-menu">
@@ -50,7 +45,14 @@ export class SingleProduct extends Component {
                     </ul>
                 </div>
                 <div className="product-section-container">
-                    <p>asdf</p>
+                    <Route 
+                        exact path={`${match.path}`} 
+                        component={props => <div>Tietojen editointi tähän.</div>}
+                    />
+                    <Route
+                        path={`${match.path}/stock`}
+                        render={() => <ProductAddStock product={product}/>}
+                    />
                 </div>
             </React.Fragment>
         );
