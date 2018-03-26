@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DangerBtn, SuccessBtn } from './../buttons/Buttons';
 import { setProductSelected } from '../../reducers/productReducer';
+import { withRouter } from 'react-router-dom';
 
 export class BarcodeListener extends Component {
     constructor(props) {
@@ -24,6 +25,9 @@ export class BarcodeListener extends Component {
             );
             if (product) {
                 this.props.setProductSelected(product.product_id);
+                this.props.history.push(
+                    `/products/${product.product_id}/stock`
+                );
             }
         } else {
             alert('ERROR');
@@ -89,4 +93,4 @@ const mapDispatchToProps = {
     setProductSelected
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BarcodeListener);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BarcodeListener));
