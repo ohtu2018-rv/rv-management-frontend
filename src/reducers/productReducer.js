@@ -51,7 +51,6 @@ export const selectProductByBarcode = barcode => {
 export const getProducts = token => {
     return async dispatch => {
         const products = await productService.getAll(token);
-        console.log(products.products)
         dispatch({
             type: productActions.SET_PRODUCTS,
             products: products.products

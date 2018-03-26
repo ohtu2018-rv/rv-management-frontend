@@ -5,6 +5,7 @@ import './styles/ProductList.css';
 
 import { setProductSelected } from './../../reducers/productReducer';
 import { productFilterType } from './../../reducers/productFilterReducer';
+import { Link } from 'react-router-dom';
 
 const sorters = {
     [productFilterType.NONE]: (a, b) => a.product_id - b.product_id,
@@ -27,11 +28,8 @@ export class ProductList extends Component {
         return (
             <div className="products">
                 <div className="product-container">
-                    <button className="product" disabled>
-                        Nimi (varastosaldo)
-                    </button>
                     {prods.map(product => (
-                        <button
+                        <Link to={`/products/${product.product_id}`}
                             key={product.product_id}
                             className={
                                 product.product_id === this.props.active
@@ -45,7 +43,7 @@ export class ProductList extends Component {
                             {product.product_name} {' ('}
                             {product.quantity}
                             {') '}
-                        </button>
+                        </Link>
                     ))}
                 </div>
             </div>
