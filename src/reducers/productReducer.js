@@ -41,16 +41,10 @@ export const setProductSelected = id => {
     };
 };
 
-export const selectProductByBarcode = barcode => {
-    return {
-        type: productActions.SELECT_PRODUCT_BY_BARCODE,
-        barcode
-    };
-};
-
 export const getProducts = token => {
     return async dispatch => {
         const products = await productService.getAll(token);
+        console.log(products.products);
         dispatch({
             type: productActions.SET_PRODUCTS,
             products: products.products
