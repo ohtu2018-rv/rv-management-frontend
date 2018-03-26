@@ -9,10 +9,14 @@ import { productFilterType } from './../../reducers/productFilterReducer';
 const sorters = {
     [productFilterType.NONE]: (a, b) => a.product_id - b.product_id,
     [productFilterType.NAME_ASC]: (a, b) =>
-        a.product_name < b.product_name ? -1 : b.product_name === a.product_name ? 0 : 1,
+        a.product_name < b.product_name
+            ? -1
+            : b.product_name === a.product_name ? 0 : 1,
 
     [productFilterType.NAME_DESC]: (a, b) =>
-        a.product_name < b.product_name ? 1 : b.product_name === a.product_name ? 0 : -1,
+        a.product_name < b.product_name
+            ? 1
+            : b.product_name === a.product_name ? 0 : -1,
 
     [productFilterType.STOCK_LOW]: (a, b) => a.stock - b.stock,
 
@@ -38,9 +42,12 @@ export class ProductList extends Component {
                                     ? 'product active'
                                     : 'product'
                             }
-                            onClick={() =>
-                                this.props.setProductSelected(product.product_id)
-                            }
+                            onClick={() => {
+                                this.props.setProductSelected(
+                                    product.product_id
+                                );
+                                document.getElementById('barcodeInput').focus();
+                            }}
                         >
                             {product.product_name} {' ('}
                             {product.quantity}

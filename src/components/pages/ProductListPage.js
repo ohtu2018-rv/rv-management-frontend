@@ -8,11 +8,11 @@ import { Row, Col } from 'react-flexbox-grid';
 import './styles/ProductListPage.css';
 import { getProducts } from '../../reducers/productReducer';
 import { getGlobalMargin } from '../../reducers/productReducer';
-import NewGlobalMargin from '../sections/NewGlobalMargin'
+import NewGlobalMargin from '../sections/NewGlobalMargin';
 export class ProductListPage extends Component {
     componentWillMount() {
         this.props.getProducts(this.props.token);
-        this.props.getGlobalMargin(this.props.token)
+        this.props.getGlobalMargin(this.props.token);
     }
 
     render() {
