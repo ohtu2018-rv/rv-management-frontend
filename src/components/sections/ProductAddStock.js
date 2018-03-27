@@ -45,7 +45,7 @@ export class ProductAddStock extends React.Component {
                         <Col xs={3}>
                             <label htmlFor="barcode">Viivakoodi</label>
                         </Col>
-                        <Col xs={6}>
+                        <Col xs={9}>
                             <input 
                                 id="barcode"
                                 name="barcode"
@@ -58,7 +58,7 @@ export class ProductAddStock extends React.Component {
                         <Col xs={3}>
                             <label htmlFor="cost">Sisäänostohinta (1 tuote)</label>
                         </Col>
-                        <Col xs={6}>
+                        <Col xs={9}>
                             <input 
                                 id="cost" 
                                 name="cost"
@@ -76,7 +76,7 @@ export class ProductAddStock extends React.Component {
                         <Col xs={3}>
                             <label htmlFor="margin">Kate</label>
                         </Col>
-                        <Col xs={6}>
+                        <Col xs={9}>
                             <input 
                                 id="margin" 
                                 name="margin" 
@@ -94,7 +94,7 @@ export class ProductAddStock extends React.Component {
                         <Col xs={3}>
                             <label htmlFor="sellprice">Myyntihinta (1 tuote)</label>
                         </Col>
-                        <Col xs={6}>
+                        <Col xs={9}>
                             <input 
                                 id="sellprice" 
                                 name="sellprice"
@@ -109,7 +109,7 @@ export class ProductAddStock extends React.Component {
                         <Col xs={3}>
                             <label htmlFor="quantity">Kappalemäärä</label>
                         </Col>
-                        <Col xs={6}>
+                        <Col xs={9}>
                             <input 
                                 id="quantity"
                                 name="quantity"
