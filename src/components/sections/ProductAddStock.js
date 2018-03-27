@@ -1,16 +1,43 @@
 import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import './styles/ProductAddStock.css';
+import { connect } from 'react-redux';
 
-class ProductAddStock extends React.Component {
+export class ProductAddStock extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.calculateSellprice = this.calculateSellprice.bind(this);
+    }
+
+    updateFields() {
+        this.barcodeInput.value = this.props.product.product_barcode;
+        this.marginInput.value = this.props.globalMargin;
+        this.calculateSellprice();
+    }
+
+    calculateSellprice() {
+        const cost = parseFloat(this.costInput.value);
+        const margin = parseFloat(this.marginInput.value);
+
+        this.sellpriceInput.value = 
+            (cost * ((100 + margin) / 100)).toFixed(2);
+    }
+
+    componentDidMount() {
+        this.updateFields();
+    }
+
+    componentDidUpdate() {
+        this.updateFields();
+    }
 
     formSubmit(event) {
         event.preventDefault();
     }
 
     render() {
-        const product = this.props.product;
-
         return (
             <div className="product-stocking-form">
                 <form onSubmit={this.formSubmit}>
@@ -23,7 +50,7 @@ class ProductAddStock extends React.Component {
                                 id="barcode"
                                 name="barcode"
                                 type="text"
-                                defaultValue={product.product_barcode}
+                                ref={input => { this.barcodeInput = input; }}
                             />
                         </Col>
                     </Row>
@@ -39,7 +66,10 @@ class ProductAddStock extends React.Component {
                                 step="0.05"
                                 min="0"
                                 defaultValue="1.50"
+                                ref={input => { this.costInput = input; }}
+                                onChange={this.calculateSellprice}
                             />
+                            <span className="unit">&euro;</span>
                         </Col>
                     </Row>
                     <Row>
@@ -47,7 +77,17 @@ class ProductAddStock extends React.Component {
                             <label htmlFor="margin">Kate</label>
                         </Col>
                         <Col xs={6}>
-                            <input id="margin" name="margin" type="text"/>
+                            <input 
+                                id="margin" 
+                                name="margin" 
+                                type="number"
+                                step="1"
+                                min="0"
+                                defaultValue={this.props.globalMargin}
+                                ref={input => { this.marginInput = input; }}
+                                onChange={this.calculateSellprice}
+                            />
+                            <span className="unit">%</span>
                         </Col>
                     </Row>
                     <Row>
@@ -55,7 +95,14 @@ class ProductAddStock extends React.Component {
                             <label htmlFor="sellprice">Myyntihinta (1 tuote)</label>
                         </Col>
                         <Col xs={6}>
-                            <input id="sellprice" name="sellprice" type="text"/>
+                            <input 
+                                id="sellprice" 
+                                name="sellprice"
+                                type="number"
+                                step="0.05"
+                                ref={input => { this.sellpriceInput = input; }}
+                            />
+                            <span className="unit">&euro;</span>
                         </Col>
                     </Row>
                     <Row>
@@ -63,10 +110,18 @@ class ProductAddStock extends React.Component {
                             <label htmlFor="quantity">Kappalemäärä</label>
                         </Col>
                         <Col xs={6}>
-                            <input id="quantity" name="quantity" type="text"/>
+                            <input 
+                                id="quantity"
+                                name="quantity"
+                                type="number"
+                                defaultValue="1"
+                                min="1"
+                                step="1"
+                            />
+                            <span className="unit">kpl</span>
                         </Col>
                     </Row>
-                    <Row center="xs">
+                    <Row>
                         <Col xs={6}>
                             <input 
                                 type="submit" 
@@ -81,4 +136,10 @@ class ProductAddStock extends React.Component {
     }
 }
 
-export default ProductAddStock;
+const mapStateToProps = state => {
+    return {
+        globalMargin: state.product.globalMargin
+    };
+};
+
+export default connect(mapStateToProps)(ProductAddStock);
