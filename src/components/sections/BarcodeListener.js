@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DangerBtn, SuccessBtn } from './../buttons/Buttons';
 import { setProductSelected } from '../../reducers/productReducer';
-
+import { errorMessage } from '../../reducers/notificationReducer';
 export class BarcodeListener extends Component {
     constructor(props) {
         super(props);
@@ -24,9 +24,11 @@ export class BarcodeListener extends Component {
             );
             if (product) {
                 this.props.setProductSelected(product.product_id);
+            } else {
+                this.props.errorMessage('Product not found');
             }
         } else {
-            alert('ERROR');
+            this.props.errorMessage('Invalid barcode');
         }
 
         this.setState({ barcode: '' });
@@ -86,7 +88,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    setProductSelected
+    setProductSelected,
+    errorMessage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BarcodeListener);
