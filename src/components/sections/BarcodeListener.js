@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DangerBtn, SuccessBtn } from './../buttons/Buttons';
+import { setProductSelected } from '../../reducers/productReducer';
+import { withRouter } from 'react-router-dom';
 
 export class BarcodeListener extends Component {
     constructor(props) {
@@ -8,19 +10,30 @@ export class BarcodeListener extends Component {
 
         this.state = {
             barcode: '',
-            open: false
+            open: true
         };
     }
-
     handleInputEvent(event) {
         this.setState({ barcode: event.target.value });
     }
 
     handleSubmit(event) {
         event.preventDefault();
+        if (this.state.barcode.match('(^[0-9]{13})+$')) {
+            var product = this.props.products.find(
+                prod => prod.product_barcode === this.state.barcode
+            );
+            if (product) {
+                this.props.setProductSelected(product.product_id);
+                this.props.history.push(
+                    `/products/${product.product_id}/stock`
+                );
+            }
+        } else {
+            alert('ERROR');
+        }
+
         this.setState({ barcode: '' });
-        // VIIVAKOODIN MUKAAN TEHTÄVÄ TUOTTEEN VALINTA TÄNNE
-        this.props.selectProductByBarcode(this.state.barcode);
     }
 
     handleOpenClose(event) {
@@ -34,6 +47,7 @@ export class BarcodeListener extends Component {
                 {this.state.open && (
                     <form onSubmit={event => this.handleSubmit(event)}>
                         <input
+                            id="barcodeInput"
                             style={{
                                 paddingLeft: 16,
                                 paddingRight: 16,
@@ -69,8 +83,14 @@ export class BarcodeListener extends Component {
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => {
+    return {
+        products: state.product.products
+    };
+};
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    setProductSelected
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(BarcodeListener);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BarcodeListener));

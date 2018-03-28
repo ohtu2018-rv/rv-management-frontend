@@ -1,7 +1,28 @@
 .productListPage {
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  position: absolute;
+  top: 60px;
+  width: 100%;
+  height: calc(100% - 60px);
+
+  .products-content {
+    height: 100%;
+    margin: 0;
+  }
+
+  .products-sidebar {
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding: 0;
+    margin: 0;
+    border-right: 1px solid #ccc;
+  }
+
+  .single-product {
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    margin: 0;
+    padding: 20px 20px 20px 35px;
+  }
 }

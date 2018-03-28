@@ -5,14 +5,19 @@ import './styles/ProductList.css';
 
 import { setProductSelected } from './../../reducers/productReducer';
 import { productFilterType } from './../../reducers/productFilterReducer';
+import { Link } from 'react-router-dom';
 
 const sorters = {
     [productFilterType.NONE]: (a, b) => a.product_id - b.product_id,
     [productFilterType.NAME_ASC]: (a, b) =>
-        a.product_name < b.product_name ? -1 : b.product_name === a.product_name ? 0 : 1,
+        a.product_name < b.product_name
+            ? -1
+            : b.product_name === a.product_name ? 0 : 1,
 
     [productFilterType.NAME_DESC]: (a, b) =>
-        a.product_name < b.product_name ? 1 : b.product_name === a.product_name ? 0 : -1,
+        a.product_name < b.product_name
+            ? 1
+            : b.product_name === a.product_name ? 0 : -1,
 
     [productFilterType.STOCK_LOW]: (a, b) => a.stock - b.stock,
 
@@ -27,25 +32,25 @@ export class ProductList extends Component {
         return (
             <div className="products">
                 <div className="product-container">
-                    <button className="product" disabled>
-                        Nimi (varastosaldo)
-                    </button>
                     {prods.map(product => (
-                        <button
+                        <Link to={`/products/${product.product_id}`}
                             key={product.product_id}
                             className={
                                 product.product_id === this.props.active
                                     ? 'product active'
                                     : 'product'
                             }
-                            onClick={() =>
-                                this.props.setProductSelected(product.product_id)
-                            }
+                            onClick={() => {
+                                this.props.setProductSelected(
+                                    product.product_id
+                                );
+                                document.getElementById('barcodeInput').focus();
+                            }}
                         >
                             {product.product_name} {' ('}
                             {product.quantity}
                             {') '}
-                        </button>
+                        </Link>
                     ))}
                 </div>
             </div>
