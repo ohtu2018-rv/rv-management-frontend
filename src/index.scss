@@ -8,6 +8,7 @@ body,
 html {
   font-size: $font-baseline-size;
   background: $body-background;
+  overflow-y: hidden;
 }
 
 textarea,
