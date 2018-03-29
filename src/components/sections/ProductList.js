@@ -5,6 +5,7 @@ import './styles/ProductList.css';
 
 import { setProductSelected } from './../../reducers/productReducer';
 import { productFilterType } from './../../reducers/productFilterReducer';
+import { Link } from 'react-router-dom';
 
 const sorters = {
     [productFilterType.NONE]: (a, b) => a.product_id - b.product_id,
@@ -27,7 +28,7 @@ export class ProductList extends Component {
     componentDidUpdate() {
         if (this.active) {
             this.active.scrollIntoView();
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         }
     }
     render() {
@@ -37,13 +38,14 @@ export class ProductList extends Component {
         return (
             <div className="products">
                 <div className="product-container">
-                    <button className="product" disabled>
+                    <button className="product-disabled" disabled>
                         Nimi (varastosaldo)
                     </button>
                     {prods.map(
                         product =>
                             product.product_id !== this.props.active ? (
-                                <button
+                                <Link
+                                    to={`/products/${product.product_id}`}
                                     key={product.product_id}
                                     className="product"
                                     onClick={() => {
@@ -58,25 +60,20 @@ export class ProductList extends Component {
                                     {product.product_name} {' ('}
                                     {product.quantity}
                                     {') '}
-                                </button>
+                                </Link>
                             ) : (
-                                <button
+                                <Link
+                                    innerRef={current =>
+                                        (this.current = current)
+                                    }
+                                    to={`/products/${product.product_id}`}
                                     key={product.product_id}
-                                    ref={active => (this.active = active)}
                                     className="product active"
-                                    onClick={() => {
-                                        this.props.setProductSelected(
-                                            product.product_id
-                                        );
-                                        document
-                                            .getElementById('barcodeInput')
-                                            .focus();
-                                    }}
                                 >
                                     {product.product_name} {' ('}
                                     {product.quantity}
                                     {') '}
-                                </button>
+                                </Link>
                             )
                     )}
                 </div>

@@ -1,13 +1,21 @@
 language: node_js
 node_js:
 - '9'
+
 cache:
   yarn: true
   directories:
   - node_modules
+
 install:
 - yarn
-- yarn build-css
+- yarn build-css 
+- yarn global add codecov
+
+script:
+  - yarn test --coverage
+  - codecov
+
 deploy:
   provider: heroku
   api_key:
