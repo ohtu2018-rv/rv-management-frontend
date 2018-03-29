@@ -65,8 +65,8 @@ export class ProductList extends Component {
                                 </Link>
                             ) : (
                                 <Link
-                                    innerRef={current =>
-                                        (this.current = current)
+                                    innerRef={active =>
+                                        (this.active = active)
                                     }
                                     to={`/products/${product.product_id}`}
                                     key={product.product_id}
