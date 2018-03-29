@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles/SingleProduct.css';
-import twix from './../../images/twix.png';
+import noImage from './../../images/no_image.png';
 import { fetchProductMargin } from './../../reducers/productMarginReducer';
 import { setProductSelected } from '../../reducers/productReducer';
 import { Route, withRouter, NavLink } from 'react-router-dom';
@@ -35,7 +35,7 @@ export class SingleProduct extends Component {
                         <h2>{product.quantity} varastossa</h2>
                     </div>
                     <div className="product-image">
-                        <img src={twix} alt={product.product_name}/>
+                        <img src={noImage} alt={product.product_name}/>
                     </div>
                 </div>
                 <div className="product-menu">
