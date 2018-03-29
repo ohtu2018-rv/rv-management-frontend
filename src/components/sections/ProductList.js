@@ -57,9 +57,11 @@ export class ProductList extends Component {
                                             .focus();
                                     }}
                                 >
-                                    {product.product_name} {' ('}
-                                    {product.quantity}
-                                    {') '}
+                                    <span>
+                                        {product.product_name} {' ('}
+                                        {product.quantity}
+                                        {') '}
+                                    </span>
                                 </Link>
                             ) : (
                                 <Link
@@ -70,9 +72,11 @@ export class ProductList extends Component {
                                     key={product.product_id}
                                     className="product active"
                                 >
-                                    {product.product_name} {' ('}
-                                    {product.quantity}
-                                    {') '}
+                                    <span>
+                                        {product.product_name} {' ('}
+                                        {product.quantity}
+                                        {') '}
+                                    </span>
                                 </Link>
                             )
                     )}

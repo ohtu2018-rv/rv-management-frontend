@@ -23,6 +23,7 @@
     text-overflow: ellipsis;
     text-decoration: none;
     color: #000;
+    overflow-x: hidden !important;
 
     &:nth-child(odd) {
       background-color: #e9e9e9;
