@@ -1,0 +1,23 @@
+@import "vars";
+
+.error-message {
+  font-size: $notification-font-size;
+  padding: $base-padding;
+  text-align: center;
+  display: block;
+  white-space: nowrap;
+  background-color: $error-notification-bgcolor;
+  border-radius: $notification-border-radius;
+  color: $error-notification-textcolor;
+  margin: $base-margin;
+}
+
+.error-message-shadow {
+  box-shadow: $box-shadow;
+}
+
+.cross {
+  stroke: $error-notification-textcolor;
+  stroke-linecap: round;
+  stroke-width: $error-notification-cross-width;
+}

@@ -2,6 +2,7 @@ import authenticationReducer from './reducers/authenticationReducer';
 import productReducer from './reducers/productReducer';
 import productMarginReducer from './reducers/productMarginReducer';
 import productFilterReducer from './reducers/productFilterReducer';
+import notificationReducer from './reducers/notificationReducer';
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -12,7 +13,8 @@ const reducer = combineReducers({
     authentication: authenticationReducer,
     product: productReducer,
     productMargin: productMarginReducer,
-    productFilter: productFilterReducer
+    productFilter: productFilterReducer,
+    notification: notificationReducer
 });
 
 // Create store

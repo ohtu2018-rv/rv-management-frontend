@@ -1,0 +1,38 @@
+@import "vars";
+
+.success-message {
+  font-size: $notification-font-size;
+  padding: $base-padding;
+  text-align: center;
+  display: block;
+  white-space: nowrap;
+  background-color: $success-notification-bgcolor;
+  border-radius: $notification-border-radius;
+  color: $success-notification-textcolor;
+  margin: $base-margin;
+}
+
+.success-message-shadow {
+  box-shadow: $box-shadow;
+}
+
+#successAnimation {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#successAnimationCircle {
+  stroke-dasharray: 151px 151px;
+  stroke: $success-notification-textcolor;
+}
+
+#successAnimationCheck {
+  stroke-dasharray: 36px 36px;
+  stroke: $success-notification-textcolor;
+}
+
+#successAnimationResult {
+  fill: none;
+  opacity: 0;
+}
