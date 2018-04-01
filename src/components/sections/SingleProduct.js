@@ -15,6 +15,12 @@ export class SingleProduct extends Component {
         };
     }
 
+    componentDidUpdate() {
+        if (this.props.selectedProduct === 0 && this.props.product) {
+            this.props.setProductSelected(this.props.product.product_id);
+        }
+    }
+
     componentWillUnmount() {
         this.props.setProductSelected(0);
     }
@@ -70,6 +76,7 @@ const mapStateToProps = (state, props) => {
             product => product.product_id === parseInt(props.match.params.productid, 10)
         ),
         productMargin: state.productMargin.productMargin,
+        selectedProduct: state.product.selectedProduct,
         globalMargin: state.product.globalMargin
     };
 };

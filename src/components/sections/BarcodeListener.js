@@ -26,11 +26,11 @@ export class BarcodeListener extends Component {
             );
             if (product) {
                 this.props.setProductSelected(product.product_id);
-            } else {
-                this.props.errorMessage('Product not found');
                 this.props.history.push(
                     `/products/${product.product_id}/stock`
                 );
+            } else {
+                this.props.errorMessage('Product not found');
             }
         } else {
             this.props.errorMessage('Invalid barcode');
