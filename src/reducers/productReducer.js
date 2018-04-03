@@ -44,12 +44,30 @@ export const setProductSelected = id => {
 export const getProducts = token => {
     return async dispatch => {
         const products = await productService.getAll(token);
-        console.log(products.products);
+        //console.log(products.products);
         dispatch({
             type: productActions.SET_PRODUCTS,
             products: products.products
         });
     };
+};
+
+export const addStock = (product, token) => {
+
+    return async dispatch => {
+
+        try {
+            const res = await productService.addStock(token, product);
+            //console.log(res);
+            //dispatch({
+            //successMessage('hurray you bought in something'),
+
+            //});
+        } catch (err) {
+            //console.log(err);
+        }
+    };
+
 };
 
 const productReducer = (state = initialState, action) => {
