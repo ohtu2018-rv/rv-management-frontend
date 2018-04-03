@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DangerBtn, SuccessBtn } from './../buttons/Buttons';
 import { setProductSelected } from '../../reducers/productReducer';
+import { errorMessage } from '../../reducers/notificationReducer';
 import { withRouter } from 'react-router-dom';
 
 export class BarcodeListener extends Component {
@@ -28,9 +29,11 @@ export class BarcodeListener extends Component {
                 this.props.history.push(
                     `/products/${product.product_id}/stock`
                 );
+            } else {
+                this.props.errorMessage('Product not found');
             }
         } else {
-            alert('ERROR');
+            this.props.errorMessage('Invalid barcode');
         }
 
         this.setState({ barcode: '' });
@@ -90,7 +93,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    setProductSelected
+    setProductSelected,
+    errorMessage
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BarcodeListener));

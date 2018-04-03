@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { errorMessage } from './notificationReducer';
 
 export const authenticationActions = {
     SET_AUTHENTICATING: 'SET_AUTHENTICATING',
@@ -40,7 +41,9 @@ export const authenticate = (username, password) => {
         dispatch(setAuthenticating(true));
         try {
             const res = await axios.post(
-                `${process.env.REACT_APP_BACKEND_URL}/api/v1/admin/authenticate`,
+                `${
+                    process.env.REACT_APP_BACKEND_URL
+                }/api/v1/admin/authenticate`,
                 {
                     username: username,
                     password: password
@@ -48,24 +51,28 @@ export const authenticate = (username, password) => {
             );
 
             // store token in session storage
-            window.sessionStorage.setItem('rvadmintoken', res.data.access_token);
+            window.sessionStorage.setItem(
+                'rvadmintoken',
+                res.data.access_token
+            );
             dispatch(setAuthenticating(false));
             dispatch(authenticationSuccess(res.data.access_token));
-        }
-        catch (error) {
+        } catch (error) {
             dispatch(setAuthenticating(false));
 
-            const errorCode = error.response ? error.response.data.error_code : null;
+            const errorCode = error.response
+                ? error.response.data.error_code
+                : null;
 
             switch (errorCode) {
             case 'invalid_credentials':
-                dispatch(authenticationFailure('Väärä käyttäjätunnus tai salasana'));
+                dispatch(errorMessage('Väärä käyttäjätunnus tai salasana'));
                 break;
             case 'not_authorized':
-                dispatch(authenticationFailure('Ei käyttöoikeutta'));
+                dispatch(errorMessage('Ei käyttöoikeutta'));
                 break;
             default:
-                dispatch(authenticationFailure('Tuntematon virhe kirjautumisessa'));
+                dispatch(errorMessage('Tuntematon virhe kirjautumisessa'));
                 break;
             }
         }
@@ -83,7 +90,6 @@ export const logout = () => {
 
 const authenticationReducer = (state = initialState, action) => {
     switch (action.type) {
-
     case authenticationActions.SET_AUTHENTICATING:
         return Object.assign({}, state, {
             isAuthenticating: action.isAuthenticating
@@ -95,7 +101,7 @@ const authenticationReducer = (state = initialState, action) => {
             accessToken: action.accessToken,
             authenticationError: null
         });
-    
+
     case authenticationActions.AUTHENTICATION_FAILURE:
         return Object.assign({}, state, {
             isAuthenticated: false,
@@ -112,7 +118,6 @@ const authenticationReducer = (state = initialState, action) => {
 
     default:
         return state;
-
     }
 };
 

@@ -6,3 +6,5 @@ coverage/
 .vscode
 .env
 build/
+yarn-error.log
+output.txt

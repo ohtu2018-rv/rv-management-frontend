@@ -7,6 +7,7 @@ import {
     logout
 } from '../reducers/authenticationReducer';
 import authenticationReducer from '../reducers/authenticationReducer';
+import { notificationActions, notificationTypes } from '../reducers/notificationReducer';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 import './__mocks__/storageMock';
@@ -25,9 +26,15 @@ describe('Authentication reducer', () => {
                 const expectedActions = [
                     setAuthenticating(true),
                     setAuthenticating(false),
-                    authenticationFailure('Väärä käyttäjätunnus tai salasana')
+                    {
+                        type: notificationActions.MESSAGE,
+                        messageType: notificationTypes.ERROR,
+                        message: 'Väärä käyttäjätunnus tai salasana'
+                    }
                 ];
     
+                delete actions[2]['id'];
+
                 expect(actions).toEqual(expectedActions);
             });
     });

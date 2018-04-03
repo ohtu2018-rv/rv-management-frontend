@@ -25,6 +25,12 @@ const sorters = {
 };
 
 export class ProductList extends Component {
+    componentDidUpdate() {
+        if (this.active) {
+            this.active.scrollIntoView();
+            window.scrollTo(0, 0);
+        }
+    }
     render() {
         const prods = this.props.products
             ? this.props.products.sort(sorters[this.props.sortedBy])
@@ -32,26 +38,48 @@ export class ProductList extends Component {
         return (
             <div className="products">
                 <div className="product-container">
-                    {prods.map(product => (
-                        <Link to={`/products/${product.product_id}`}
-                            key={product.product_id}
-                            className={
-                                product.product_id === this.props.active
-                                    ? 'product active'
-                                    : 'product'
-                            }
-                            onClick={() => {
-                                this.props.setProductSelected(
-                                    product.product_id
-                                );
-                                document.getElementById('barcodeInput').focus();
-                            }}
-                        >
-                            {product.product_name} {' ('}
-                            {product.quantity}
-                            {') '}
-                        </Link>
-                    ))}
+                    <button className="product-disabled" disabled>
+                        Nimi (varastosaldo)
+                    </button>
+                    {prods.map(
+                        product =>
+                            product.product_id !== this.props.active ? (
+                                <Link
+                                    to={`/products/${product.product_id}`}
+                                    key={product.product_id}
+                                    className="product"
+                                    onClick={() => {
+                                        this.props.setProductSelected(
+                                            product.product_id
+                                        );
+                                        document
+                                            .getElementById('barcodeInput')
+                                            .focus();
+                                    }}
+                                >
+                                    <span>
+                                        {product.product_name} {' ('}
+                                        {product.quantity}
+                                        {') '}
+                                    </span>
+                                </Link>
+                            ) : (
+                                <Link
+                                    innerRef={active =>
+                                        (this.active = active)
+                                    }
+                                    to={`/products/${product.product_id}`}
+                                    key={product.product_id}
+                                    className="product active"
+                                >
+                                    <span>
+                                        {product.product_name} {' ('}
+                                        {product.quantity}
+                                        {') '}
+                                    </span>
+                                </Link>
+                            )
+                    )}
                 </div>
             </div>
         );
