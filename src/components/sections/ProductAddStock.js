@@ -3,7 +3,8 @@ import { Row, Col } from 'react-flexbox-grid';
 import './styles/ProductAddStock.css';
 import { connect } from 'react-redux';
 
-import { addStock } from '../../reducers/productReducer';
+import { addStock , setUpgradeStock } from '../../reducers/productReducer';
+import { Redirect } from 'react-router-dom';
 
 export class ProductAddStock extends React.Component {
 
@@ -33,9 +34,15 @@ export class ProductAddStock extends React.Component {
     }
 
     componentDidUpdate() {
-        this.updateFields();
+        if (!this.props.upgradeStock) {
+            this.updateFields();
+        }
     }
 
+    componentWillUnmount() {
+        this.props.setUpgradeStock(false);
+    }
+    
     formSubmit(event) {
         event.preventDefault();
         const product = {
@@ -51,6 +58,10 @@ export class ProductAddStock extends React.Component {
     }
 
     render() {
+        if (this.props.upgradeStock) {
+            const link = '/products/' + this.props.product.product_id;         
+            return <Redirect to={ link }/>;
+        }
         return (
             <div className="product-stocking-form">
                 <form onSubmit={this.formSubmit}>
@@ -76,7 +87,7 @@ export class ProductAddStock extends React.Component {
                                 id="cost"
                                 name="cost"
                                 type="number"
-                                step="0.05"
+                                step="0.01"
                                 min="0"
                                 defaultValue="1.50"
                                 ref={input => { this.costInput = input; }}
@@ -112,7 +123,7 @@ export class ProductAddStock extends React.Component {
                                 id="sellprice"
                                 name="sellprice"
                                 type="number"
-                                step="0.05"
+                                step="0.01"
                                 ref={input => { this.sellpriceInput = input; }}
                             />
                             <span className="unit">&euro;</span>
@@ -151,14 +162,16 @@ export class ProductAddStock extends React.Component {
 }
 
 const mapDispatchToProps = {
-    addStock
+    addStock,
+    setUpgradeStock
 };
 
 
 const mapStateToProps = state => {
     return {
         globalMargin: state.product.globalMargin,
-        token: state.authentication.accessToken
+        token: state.authentication.accessToken,
+        upgradeStock: state.product.upgradeStock
     };
 };
 

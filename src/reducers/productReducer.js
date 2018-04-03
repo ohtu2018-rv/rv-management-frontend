@@ -1,17 +1,21 @@
 import productService from '../services/productService';
 import marginService from '../services/globalMarginService';
+import { errorMessage, successMessage } from './notificationReducer';
 
 export const productActions = {
     SET_PRODUCT_SELECTED: 'SET_PRODUCT_SELECTED',
     SELECT_PRODUCT_BY_BARCODE: 'SELECT_PRODUCT_BY_BARCODE',
     SET_PRODUCTS: 'SET_PRODUCTS',
-    SET_GLOBAL_MARGIN: 'SET_GLOBAL_MARGIN'
+    SET_GLOBAL_MARGIN: 'SET_GLOBAL_MARGIN',
+    SET_UPGRADESTOCK: 'SET_UPGRADESTOCK',
+    UPDATE_PRODUCT: 'UPDATE_PRODUCT'
 };
 
 export const initialState = {
     selectedProduct: 0,
     products: [],
-    globalMargin: 0
+    globalMargin: 0,
+    upgradeStock: false
 };
 
 export const setGlobalMargin = (newMargin, token) => {
@@ -52,19 +56,42 @@ export const getProducts = token => {
     };
 };
 
-export const addStock = (product, token) => {
+//redirects from addStock page to product info tab when value is true
+export const setUpgradeStock = (value) => {    
+    return {
+        type: productActions.SET_UPGRADESTOCK,
+        redirect: value
+    };
+};
 
+//fix this:now works with updating products by requesting whole productlist from backend
+export const addStock = (product, token) => {    
     return async dispatch => {
-
         try {
-            const res = await productService.addStock(token, product);
-            //console.log(res);
-            //dispatch({
-            //successMessage('hurray you bought in something'),
-
-            //});
-        } catch (err) {
-            //console.log(err);
+            const res = await productService.addStock(token, product);            
+            dispatch(successMessage('Sisäänosto suoritettu'));
+            dispatch(setUpgradeStock(true));
+            dispatch(getProducts(token));      
+        } catch (error) {
+            const errorCode = error.response
+                ? error.response.data.error_code
+                : null;
+            switch (errorCode) {
+            case 'bad_request':
+                error.response.data.errors.forEach(message => {
+                    dispatch(errorMessage(message));
+                });                             
+                break;
+            case 'product_not_found':
+                dispatch(errorMessage('product_not_found from database'));
+                break;
+            case 'internal_error':
+                dispatch(errorMessage('internal_error / Database is not running or connected'));
+                break;    
+            default:
+                dispatch(errorMessage('Unknown error has occuered'));
+                break;
+            }
         }
     };
 
@@ -81,6 +108,10 @@ const productReducer = (state = initialState, action) => {
     case productActions.SET_PRODUCT_SELECTED:
         return Object.assign({}, state, {
             selectedProduct: action.selectedProduct
+        });
+    case productActions.SET_UPGRADESTOCK:
+        return Object.assign({}, state, {
+            upgradeStock: action.redirect
         });
     default:
         return state;

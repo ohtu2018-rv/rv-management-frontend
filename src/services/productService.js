@@ -23,7 +23,7 @@ const addStock = (token, product) => {
             {
                 headers: { Authorization: 'Bearer ' + token }
             })
-        .then(res => res);
+        .then(res => res.data);
 };
 
 export default {
