@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import {
-    BrowserRouter as Router,
-    Route,
-    Redirect
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ProductListPage from './components/pages/ProductListPage';
 import LoginPage from './components/pages/LoginPage';
 import Header from './components/sections/Header';
 import store from './store';
 import { authenticationSuccess } from './reducers/authenticationReducer';
+import NotificationDrawer from './components/sections/NotificationDrawer';
 
 const isAuthenticated = () => {
     const loggedIn = store.getState().authentication.isAuthenticated;
@@ -53,13 +50,18 @@ export class App extends Component {
         return (
             <Router>
                 <div className="app">
-                    <Header/>
-                    <AuthenticatedRoute 
-                        exact path="/" 
-                        component={(props) => <Redirect to="/products"/>}
+                    <NotificationDrawer
+                        notifications={this.props.notifications}
+                        products={[]}
                     />
-                    <AuthenticatedRoute 
-                        path="/products" 
+                    <Header />
+                    <AuthenticatedRoute
+                        exact
+                        path="/"
+                        component={props => <Redirect to="/products" />}
+                    />
+                    <AuthenticatedRoute
+                        path="/products"
                         component={ProductListPage}
                     />
                     <Route path="/login" component={LoginPage} />
@@ -71,9 +73,9 @@ export class App extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.authentication.isAuthenticated
+        isAuthenticated: state.authentication.isAuthenticated,
+        notifications: state.notification.notifications
     };
 };
-
 
 export default connect(mapStateToProps)(App);
