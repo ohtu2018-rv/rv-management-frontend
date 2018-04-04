@@ -40,8 +40,8 @@ export class ProductForm extends Component {
             weight: event.target.weight.value,
             barcode: event.target.barcode.value,
             count: 0,
-            buyprice: parseInt(event.target.buyprice.value * 100),
-            sellprice: parseInt(event.target.sellprice.value * 100)
+            buyprice: parseInt(event.target.buyprice.value * 100, 10),
+            sellprice: parseInt(event.target.sellprice.value * 100, 10)
         };
         this.props.addProduct(newProduct, this.props.token);
     }

@@ -9,7 +9,6 @@ import { Row, Col } from 'react-flexbox-grid';
 import './styles/ProductListPage.css';
 import { getProducts } from '../../reducers/productReducer';
 import { getGlobalMargin } from '../../reducers/productReducer';
-import NewGlobalMargin from '../sections/NewGlobalMargin';
 import { Route, NavLink } from 'react-router-dom';
 import { SuccessBtn } from '../buttons/Buttons';
 
@@ -37,9 +36,10 @@ export class ProductListPage extends Component {
                             component={props => (
                                 <div>
                                     <div>Valitse tuote tai lue viivakoodi.</div>
-
-                                    <NavLink to={`${match.path}/create/product`}>
-                                        <SuccessBtn>Luo uusi</SuccessBtn>
+                                    <NavLink
+                                        to={`${match.path}/create/product`}
+                                    >
+                                        <SuccessBtn>Luo uusi tuote</SuccessBtn>
                                     </NavLink>
                                 </div>
                             )}
