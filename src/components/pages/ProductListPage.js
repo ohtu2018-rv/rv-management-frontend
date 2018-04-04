@@ -38,7 +38,7 @@ export class ProductListPage extends Component {
                                 <div>
                                     <div>Valitse tuote tai lue viivakoodi.</div>
 
-                                    <NavLink to={`${match.path}/create`}>
+                                    <NavLink to={`${match.path}/create/product`}>
                                         <SuccessBtn>Luo uusi</SuccessBtn>
                                     </NavLink>
                                 </div>
