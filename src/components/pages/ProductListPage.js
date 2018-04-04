@@ -10,7 +10,7 @@ import './styles/ProductListPage.css';
 import { getProducts } from '../../reducers/productReducer';
 import { getGlobalMargin } from '../../reducers/productReducer';
 import NewGlobalMargin from '../sections/NewGlobalMargin';
-import { Route, NavLink} from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import { SuccessBtn } from '../buttons/Buttons';
 
 export class ProductListPage extends Component {
@@ -37,11 +37,6 @@ export class ProductListPage extends Component {
                             component={props => (
                                 <div>
                                     <div>Valitse tuote tai lue viivakoodi.</div>
-                                    <SuccessBtn>
-                                        <NavLink to={`${match.path}/create`}>
-                                            Luo uusi
-                                        </NavLink>
-                                    </SuccessBtn>
                                 </div>
                             )}
                         />
