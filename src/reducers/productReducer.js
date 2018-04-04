@@ -71,7 +71,7 @@ export const addProduct = (product, token) => {
             );
             dispatch({
                 type: productActions.ADD_NEW_PRODUCT,
-                product: productFilter(addedProduct.data)
+                product: productFilter(addedProduct)
             });
 
             dispatch(successMessage('New product added successfully'));

@@ -9,6 +9,7 @@ export class ProductForm extends Component {
     constructor(props) {
         super(props);
         this.calculateSellprice = this.calculateSellprice.bind(this);
+        this.formSubmit = this.formSubmit.bind(this);
     }
 
     updateFields() {
@@ -39,8 +40,8 @@ export class ProductForm extends Component {
             weight: event.target.weight.value,
             barcode: event.target.barcode.value,
             count: 0,
-            buyprice: event.target.buyprice.value,
-            sellprice: event.target.sellprice.value
+            buyprice: parseInt(event.target.buyprice.value * 100),
+            sellprice: parseInt(event.target.sellprice.value * 100)
         };
         this.props.addProduct(newProduct, this.props.token);
     }
