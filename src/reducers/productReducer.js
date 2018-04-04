@@ -7,13 +7,16 @@ export const productActions = {
     SELECT_PRODUCT_BY_BARCODE: 'SELECT_PRODUCT_BY_BARCODE',
     SET_PRODUCTS: 'SET_PRODUCTS',
     SET_GLOBAL_MARGIN: 'SET_GLOBAL_MARGIN',
-    ADD_NEW_PRODUCT: 'ADD_NEW_PRODUCT'
+    ADD_NEW_PRODUCT: 'ADD_NEW_PRODUCT',
+    SET_UPGRADESTOCK: 'SET_UPGRADESTOCK',
+    UPDATE_PRODUCT: 'UPDATE_PRODUCT'
 };
 
 export const initialState = {
     selectedProduct: 0,
     products: [],
-    globalMargin: 0
+    globalMargin: 0,
+    upgradeStock: false
 };
 
 export const setGlobalMargin = (newMargin, token) => {
@@ -76,6 +79,7 @@ export const addProduct = (product, token) => {
 
             dispatch(successMessage('New product added successfully'));
         } catch (ex) {
+            console.log(ex);
             dispatch(errorMessage('Error adding new product'));
         }
     };
@@ -84,11 +88,55 @@ export const addProduct = (product, token) => {
 export const getProducts = token => {
     return async dispatch => {
         const products = await productService.getAll(token);
-        console.log(products.products);
+        //console.log(products.products);
         dispatch({
             type: productActions.SET_PRODUCTS,
             products: products.products
         });
+    };
+};
+
+//redirects from addStock page to product info tab when value is true
+export const setUpgradeStock = value => {
+    return {
+        type: productActions.SET_UPGRADESTOCK,
+        redirect: value
+    };
+};
+
+//fix this:now works with updating products by requesting whole productlist from backend
+export const addStock = (product, token) => {
+    return async dispatch => {
+        try {
+            await productService.addStock(token, product);
+            dispatch(successMessage('Buy in completed'));
+            dispatch(setUpgradeStock(true));
+            dispatch(getProducts(token));
+        } catch (error) {
+            const errorCode = error.response
+                ? error.response.data.error_code
+                : null;
+            switch (errorCode) {
+            case 'bad_request':
+                error.response.data.errors.forEach(message => {
+                    dispatch(errorMessage(message));
+                });
+                break;
+            case 'product_not_found':
+                dispatch(errorMessage('product_not_found from database'));
+                break;
+            case 'internal_error':
+                dispatch(
+                    errorMessage(
+                        'internal_error / Database is not running or connected'
+                    )
+                );
+                break;
+            default:
+                dispatch(errorMessage('Unknown error has occuered'));
+                break;
+            }
+        }
     };
 };
 
@@ -107,6 +155,10 @@ const productReducer = (state = initialState, action) => {
     case productActions.ADD_NEW_PRODUCT:
         return Object.assign({}, state, {
             products: [...state.products, action.product]
+        });
+    case productActions.SET_UPGRADESTOCK:
+        return Object.assign({}, state, {
+            upgradeStock: action.redirect
         });
     default:
         return state;

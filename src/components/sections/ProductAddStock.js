@@ -3,12 +3,16 @@ import { Row, Col } from 'react-flexbox-grid';
 import './styles/ProductAddStock.css';
 import { connect } from 'react-redux';
 
+import { addStock , setUpgradeStock } from '../../reducers/productReducer';
+import { Redirect } from 'react-router-dom';
+
 export class ProductAddStock extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.calculateSellprice = this.calculateSellprice.bind(this);
+        this.formSubmit = this.formSubmit.bind(this);
     }
 
     updateFields() {
@@ -21,7 +25,7 @@ export class ProductAddStock extends React.Component {
         const cost = parseFloat(this.costInput.value);
         const margin = parseFloat(this.marginInput.value);
 
-        this.sellpriceInput.value = 
+        this.sellpriceInput.value =
             (cost * ((100 + margin) / 100)).toFixed(2);
     }
 
@@ -30,14 +34,34 @@ export class ProductAddStock extends React.Component {
     }
 
     componentDidUpdate() {
-        this.updateFields();
+        if (!this.props.upgradeStock) {
+            this.updateFields();
+        }
     }
 
+    componentWillUnmount() {
+        this.props.setUpgradeStock(false);
+    }
+    
     formSubmit(event) {
         event.preventDefault();
+        const product = {
+            id: this.props.product.product_id,
+            buyprice: this.costInput.value,
+            margin: this.marginInput.value,
+            sellprice: this.sellpriceInput.value,
+            quantity: this.quantityInput.value
+        };
+
+        this.props.addStock(
+            product, this.props.token);
     }
 
     render() {
+        if (this.props.upgradeStock) {
+            const link = '/products/' + this.props.product.product_id;         
+            return <Redirect to={ link }/>;
+        }
         return (
             <div className="product-stocking-form">
                 <form onSubmit={this.formSubmit}>
@@ -46,7 +70,7 @@ export class ProductAddStock extends React.Component {
                             <label htmlFor="barcode">Viivakoodi</label>
                         </Col>
                         <Col xs={9}>
-                            <input 
+                            <input
                                 id="barcode"
                                 name="barcode"
                                 type="text"
@@ -59,11 +83,11 @@ export class ProductAddStock extends React.Component {
                             <label htmlFor="cost">Sisäänostohinta (1 tuote)</label>
                         </Col>
                         <Col xs={9}>
-                            <input 
-                                id="cost" 
+                            <input
+                                id="cost"
                                 name="cost"
                                 type="number"
-                                step="0.05"
+                                step="0.01"
                                 min="0"
                                 defaultValue="1.50"
                                 ref={input => { this.costInput = input; }}
@@ -77,9 +101,9 @@ export class ProductAddStock extends React.Component {
                             <label htmlFor="margin">Kate</label>
                         </Col>
                         <Col xs={9}>
-                            <input 
-                                id="margin" 
-                                name="margin" 
+                            <input
+                                id="margin"
+                                name="margin"
                                 type="number"
                                 step="1"
                                 min="0"
@@ -95,11 +119,11 @@ export class ProductAddStock extends React.Component {
                             <label htmlFor="sellprice">Myyntihinta (1 tuote)</label>
                         </Col>
                         <Col xs={9}>
-                            <input 
-                                id="sellprice" 
+                            <input
+                                id="sellprice"
                                 name="sellprice"
                                 type="number"
-                                step="0.05"
+                                step="0.01"
                                 ref={input => { this.sellpriceInput = input; }}
                             />
                             <span className="unit">&euro;</span>
@@ -110,23 +134,24 @@ export class ProductAddStock extends React.Component {
                             <label htmlFor="quantity">Kappalemäärä</label>
                         </Col>
                         <Col xs={9}>
-                            <input 
+                            <input
                                 id="quantity"
                                 name="quantity"
                                 type="number"
                                 defaultValue="1"
                                 min="1"
                                 step="1"
+                                ref={input => { this.quantityInput = input; }}
                             />
                             <span className="unit">kpl</span>
                         </Col>
                     </Row>
                     <Row>
                         <Col xs={6}>
-                            <input 
-                                type="submit" 
-                                className="btn btn-success" 
-                                value="Osta sisään" 
+                            <input
+                                type="submit"
+                                className="btn btn-success"
+                                value="Osta sisään"
                             />
                         </Col>
                     </Row>
@@ -136,10 +161,18 @@ export class ProductAddStock extends React.Component {
     }
 }
 
+const mapDispatchToProps = {
+    addStock,
+    setUpgradeStock
+};
+
+
 const mapStateToProps = state => {
     return {
-        globalMargin: state.product.globalMargin
+        globalMargin: state.product.globalMargin,
+        token: state.authentication.accessToken,
+        upgradeStock: state.product.upgradeStock
     };
 };
 
-export default connect(mapStateToProps)(ProductAddStock);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductAddStock);
