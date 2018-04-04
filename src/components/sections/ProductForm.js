@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import { Link } from 'react-router-dom';
+import { addProduct } from '../../reducers/productReducer';
 import './styles/ProductForm.css';
 
 export class ProductForm extends Component {
@@ -32,6 +33,16 @@ export class ProductForm extends Component {
 
     formSubmit(event) {
         event.preventDefault();
+        const newProduct = {
+            descr: event.target.name.value,
+            pgrpid: 1,
+            weight: event.target.weight.value,
+            barcode: event.target.barcode.value,
+            count: 0,
+            buyprice: event.target.buyprice.value,
+            sellprice: event.target.sellprice.value
+        };
+        this.props.addProduct(newProduct, this.props.token);
     }
 
     render() {
@@ -104,12 +115,12 @@ export class ProductForm extends Component {
                     </Row>
                     <Row>
                         <Col xs={3}>
-                            <label htmlFor="description">Kuvaus</label>
+                            <label htmlFor="descr">Kuvaus</label>
                         </Col>
                         <Col xs={9}>
                             <textarea
-                                id="description"
-                                name="description"
+                                id="descr"
+                                name="descr"
                                 type="text"
                                 ref={input => {
                                     this.descriptionInput = input;
@@ -119,14 +130,14 @@ export class ProductForm extends Component {
                     </Row>
                     <Row>
                         <Col xs={3}>
-                            <label htmlFor="buy-in">Sisäänostohinta</label>
+                            <label htmlFor="buyprice">Sisäänostohinta</label>
                         </Col>
                         <Col xs={9}>
                             <input
-                                id="buy-in"
-                                name="buy-in"
+                                id="buyprice"
+                                name="buyprice"
                                 type="number"
-                                step="0.05"
+                                step="0.01"
                                 min="0"
                                 defaultValue="0"
                                 ref={input => {
@@ -159,14 +170,14 @@ export class ProductForm extends Component {
                     </Row>
                     <Row>
                         <Col xs={3}>
-                            <label htmlFor="sellPrice">Myyntihinta</label>
+                            <label htmlFor="sellprice">Myyntihinta</label>
                         </Col>
                         <Col xs={9}>
                             <input
                                 id="sellprice"
                                 name="sellprice"
                                 type="number"
-                                step="0.05"
+                                step="0.01"
                                 min="0"
                                 defaultValue="0"
                                 ref={input => {
@@ -203,10 +214,13 @@ export class ProductForm extends Component {
 
 const mapStateToProps = state => {
     return {
-        globalMargin: state.product.globalMargin
+        globalMargin: state.product.globalMargin,
+        token: state.authentication.accessToken
     };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    addProduct
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductForm);
