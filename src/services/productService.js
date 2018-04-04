@@ -22,4 +22,4 @@ const addProduct = (product, token) => {
 };
 
 
-export default { getAll };
+export default { getAll, addProduct };
