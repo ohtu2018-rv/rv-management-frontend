@@ -10,14 +10,14 @@ import { Link } from 'react-router-dom';
 const sorters = {
     [productFilterType.NONE]: (a, b) => a.product_id - b.product_id,
     [productFilterType.NAME_ASC]: (a, b) =>
-        a.product_name < b.product_name
+        a.product_name.toLowerCase().trim() < b.product_name.toLowerCase().trim()
             ? -1
-            : b.product_name === a.product_name ? 0 : 1,
+            : b.product_name.toLowerCase().trim() === a.product_name.toLowerCase().trim() ? 0 : 1,
 
     [productFilterType.NAME_DESC]: (a, b) =>
-        a.product_name < b.product_name
+        a.product_name.toLowerCase().trim() < b.product_name.toLowerCase().trim()
             ? 1
-            : b.product_name === a.product_name ? 0 : -1,
+            : b.product_name.toLowerCase().trim() === a.product_name.toLowerCase().trim() ? 0 : -1,
 
     [productFilterType.STOCK_LOW]: (a, b) => a.stock - b.stock,
 
