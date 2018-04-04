@@ -1,0 +1,54 @@
+.product-create-form {
+  box-sizing: border-box;
+  margin: 30px;
+
+  .row {
+    margin-bottom: 10px;
+  }
+
+  label {
+    padding-top: 5px;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    padding: 0 0 5px 0;
+    margin: 0;
+    font-size: 1.3em;
+    background: transparent;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #aaa;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  textarea {
+    height: 125px;
+    width: 46%;
+    padding: 0 0 5px 0;
+    margin: 0;
+    font-size: 0.8em;
+    background: rgb(250, 250, 250);
+    box-sizing: border-box;
+    text-align: left;
+  }
+
+  input:focus {
+    box-shadow: none;
+  }
+
+  input[type="submit"] {
+    margin-top: 20px;
+    width: 50%;
+  }
+
+  span.unit {
+    display: inline-block;
+    padding: 0;
+    margin-left: 15px;
+    font-size: 1.3em;
+  }
+}
