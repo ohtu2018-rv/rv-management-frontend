@@ -7,7 +7,6 @@ import { Row, Col } from 'react-flexbox-grid';
 import './styles/LoginPage.css';
 
 export class LoginPage extends Component {
-
     constructor(props) {
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
@@ -19,18 +18,20 @@ export class LoginPage extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        this.props.authenticate(this.usernameInput.value, this.passwordInput.value);
+        this.props.authenticate(
+            this.usernameInput.value,
+            this.passwordInput.value
+        );
     }
 
     render() {
         if (this.props.isAuthenticated) {
             // redirect to root if referrer isn't set in router
-            const redirectPath = 
-                this.props.location.state ? this.props.location.state.from.pathname : '/';
+            const redirectPath = this.props.location.state
+                ? this.props.location.state.from.pathname
+                : '/';
 
-            return (
-                <Redirect to={redirectPath} />
-            );
+            return <Redirect to={redirectPath} />;
         }
 
         return (
@@ -38,21 +39,20 @@ export class LoginPage extends Component {
                 <Row around="xs">
                     <Col xs={12} md={6} lg={4}>
                         <h1>Kirjaudu sisään</h1>
-                        {this.props.authenticationError && <div className="error-message">{this.props.authenticationError}</div>}
                         <form method="post" onSubmit={this.onSubmit}>
                             <label htmlFor="username">Käyttäjätunnus</label>
-                            <input 
-                                id="username" 
-                                name="username" 
+                            <input
+                                id="username"
+                                name="username"
                                 type="text"
                                 ref={input => {
                                     this.usernameInput = input;
                                 }}
                             />
                             <label htmlFor="password">Salasana</label>
-                            <input 
-                                id="password" 
-                                name="password" 
+                            <input
+                                id="password"
+                                name="password"
                                 type="password"
                                 ref={input => {
                                     this.passwordInput = input;
@@ -75,8 +75,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.authentication.isAuthenticated,
-        authenticationError: state.authentication.authenticationError
+        isAuthenticated: state.authentication.isAuthenticated
     };
 };
 

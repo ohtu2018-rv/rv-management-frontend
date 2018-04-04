@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles/SingleProduct.css';
-import twix from './../../images/twix.png';
+import noImage from './../../images/no_image.png';
 import { fetchProductMargin } from './../../reducers/productMarginReducer';
 import { setProductSelected } from '../../reducers/productReducer';
 import { Route, withRouter, NavLink } from 'react-router-dom';
@@ -13,6 +13,12 @@ export class SingleProduct extends Component {
         this.state = {
             buyInClicked: false
         };
+    }
+
+    componentDidUpdate() {
+        if (this.props.selectedProduct === 0 && this.props.product) {
+            this.props.setProductSelected(this.props.product.product_id);
+        }
     }
 
     componentWillUnmount() {
@@ -35,7 +41,7 @@ export class SingleProduct extends Component {
                         <h2>{product.quantity} varastossa</h2>
                     </div>
                     <div className="product-image">
-                        <img src={twix} alt={product.product_name}/>
+                        <img src={noImage} alt={product.product_name}/>
                     </div>
                 </div>
                 <div className="product-menu">
@@ -70,6 +76,7 @@ const mapStateToProps = (state, props) => {
             product => product.product_id === parseInt(props.match.params.productid, 10)
         ),
         productMargin: state.productMargin.productMargin,
+        selectedProduct: state.product.selectedProduct,
         globalMargin: state.product.globalMargin
     };
 };

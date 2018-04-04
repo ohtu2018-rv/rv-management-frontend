@@ -1,11 +1,13 @@
 import productService from '../services/productService';
 import marginService from '../services/globalMarginService';
+import { errorMessage, successMessage } from './notificationReducer';
 
 export const productActions = {
     SET_PRODUCT_SELECTED: 'SET_PRODUCT_SELECTED',
     SELECT_PRODUCT_BY_BARCODE: 'SELECT_PRODUCT_BY_BARCODE',
     SET_PRODUCTS: 'SET_PRODUCTS',
-    SET_GLOBAL_MARGIN: 'SET_GLOBAL_MARGIN'
+    SET_GLOBAL_MARGIN: 'SET_GLOBAL_MARGIN',
+    ADD_NEW_PRODUCT: 'ADD_NEW_PRODUCT'
 };
 
 export const initialState = {
@@ -41,6 +43,44 @@ export const setProductSelected = id => {
     };
 };
 
+const productFilter = product => {
+    return {
+        product_id: product.product.itemid,
+        product_name: product.product.descr,
+        product_barcode: product.price.barcode,
+        buyprice: product.price.buyprice,
+        sellprice: product.price.sellprice,
+        quantity: product.price.count
+    };
+};
+
+export const addProduct = (product, token) => {
+    return async dispatch => {
+        try {
+            const addedProduct = await productService.addProduct(
+                {
+                    descr: product.descr,
+                    pgrpid: product.pgrpid,
+                    weight: product.weight,
+                    barcode: product.barcode,
+                    count: product.count,
+                    buyprice: product.buyprice,
+                    sellprice: product.sellprice
+                },
+                token
+            );
+            dispatch({
+                type: productActions.ADD_NEW_PRODUCT,
+                product: productFilter(addedProduct.data)
+            });
+
+            dispatch(successMessage('New product added successfully'));
+        } catch (ex) {
+            dispatch(errorMessage('Error adding new product'));
+        }
+    };
+};
+
 export const getProducts = token => {
     return async dispatch => {
         const products = await productService.getAll(token);
@@ -63,6 +103,10 @@ const productReducer = (state = initialState, action) => {
     case productActions.SET_PRODUCT_SELECTED:
         return Object.assign({}, state, {
             selectedProduct: action.selectedProduct
+        });
+    case productActions.ADD_NEW_PRODUCT:
+        return Object.assign({}, state, {
+            products: [...state.products, action.product]
         });
     default:
         return state;
