@@ -7,22 +7,57 @@ export class BoxAddStock extends React.Component {
     constructor(props) {
         super(props);
 
-        this.calculateSellprice = this.calculateSellprice.bind(this);
+        this.calculateProductSellprice = this.calculateProductSellprice.bind(
+            this
+        );
+        this.calculateProductSellpriceAndBoxcost = this.calculateProductSellpriceAndBoxcost.bind(
+            this
+        );
         this.formSubmit = this.formSubmit.bind(this);
     }
 
-    updateFields() {}
+    updateFields() {
+        //        this.barcodeInput.value =
+        //        this.productBarcodeInput.value =
+        this.costInput.value = (this.props.product.buyprice / 100).toFixed(2);
+        //        this.amountInput.value =
 
-    calculateSellprice() {
-        const cost = parseFloat(this.costInput.value);
-        const margin = parseFloat(this.marginInput.value);
-
-        this.sellpriceInput.value = (cost * ((100 + margin) / 100)).toFixed(2);
+        this.marginInput.value = this.props.globalMargin;
+        this.calculateProductSellpriceAndBoxcost();
     }
 
-    componentDidMount() {}
+    calculateProductSellprice() {
+        const boxcost = parseFloat(this.boxcostInput.value);
+        const amount = parseFloat(this.amountInput.value);
+        const margin = parseFloat(this.marginInput.value);
+        const productcost = boxcost / amount;
 
-    componentDidUpdate() {}
+        this.costInput.value = productcost.toFixed(2);
+        this.sellpriceInput.value = (
+            productcost *
+            ((100 + margin) / 100)
+        ).toFixed(2);
+    }
+
+    calculateProductSellpriceAndBoxcost() {
+        const productcost = parseFloat(this.costInput.value);
+        const margin = parseFloat(this.marginInput.value);
+        const amount = parseFloat(this.amountInput.value);
+
+        this.boxcostInput.value = (productcost * amount).toFixed(2);
+        this.sellpriceInput.value = (
+            productcost *
+            ((100 + margin) / 100)
+        ).toFixed(2);
+    }
+
+    componentDidMount() {
+        this.updateFields();
+    }
+
+    componentDidUpdate() {
+        this.updateFields();
+    }
 
     componentWillUnmount() {}
 
@@ -66,7 +101,7 @@ export class BoxAddStock extends React.Component {
                                 ref={input => {
                                     this.boxcostInput = input;
                                 }}
-                                onChange={this.calculateSellprice}
+                                onChange={this.calculateProductSellprice}
                             />
                             <span className="unit">&euro;</span>
                         </Col>
@@ -86,7 +121,7 @@ export class BoxAddStock extends React.Component {
                                 ref={input => {
                                     this.marginInput = input;
                                 }}
-                                onChange={this.calculateSellprice}
+                                onChange={this.calculateProductSellprice}
                             />
                             <span className="unit">%</span>
                         </Col>
@@ -101,6 +136,7 @@ export class BoxAddStock extends React.Component {
                                 name="amount"
                                 type="number"
                                 step="1"
+                                defaultValue="10"
                                 ref={input => {
                                     this.amountInput = input;
                                 }}
@@ -129,13 +165,20 @@ export class BoxAddStock extends React.Component {
                     </Row>
                     <div className="product-wrapper">
                         <Row>
-                            <span className="product-title">
-                                Laatikko sisältää: Twix
-                            </span>
+                            <Col xs={3}>
+                                <label className="product-title">
+                                    Laatikko sisältää:
+                                </label>
+                            </Col>
+                            <Col xs={9}>
+                                <label className="product-title">Twix</label>
+                            </Col>
                         </Row>
                         <Row>
                             <Col xs={3}>
-                                <label htmlFor="barcode">Tuotteen viivakoodi</label>
+                                <label htmlFor="barcode">
+                                    Tuotteen viivakoodi
+                                </label>
                             </Col>
                             <Col xs={9}>
                                 <input
@@ -143,7 +186,7 @@ export class BoxAddStock extends React.Component {
                                     name="barcode"
                                     type="text"
                                     ref={input => {
-                                        this.barcodeInput = input;
+                                        this.productBarcodeInput = input;
                                     }}
                                 />
                             </Col>
@@ -165,7 +208,9 @@ export class BoxAddStock extends React.Component {
                                     ref={input => {
                                         this.costInput = input;
                                     }}
-                                    onChange={this.calculateSellprice}
+                                    onChange={
+                                        this.calculateProductSellpriceAndBoxcost
+                                    }
                                 />
                                 <span className="unit">&euro;</span>
                             </Col>
@@ -173,7 +218,7 @@ export class BoxAddStock extends React.Component {
                         <Row>
                             <Col xs={3}>
                                 <label htmlFor="sellprice">
-                                    Tuotteen myynthinta
+                                    Tuotteen myyntihinta
                                 </label>
                             </Col>
                             <Col xs={9}>
