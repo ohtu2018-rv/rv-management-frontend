@@ -28,11 +28,18 @@ export class SingleProduct extends Component {
 
     render() {
         const product = this.props.product;
+        const box = this.props.box;
         if (!product) {
             return <div>Valitse tuote tai lue viivakoodi.</div>;
         }
-
         const match = this.props.match;
+        
+        //link to box exist only if product has a box
+        let linkToBox = box ? 
+            <li>
+                <NavLink to={`${match.url}/box`}> Laatikon sisäänosto </NavLink>
+            </li> : 
+            <li></li>;
 
         return (
             <React.Fragment>
@@ -57,9 +64,7 @@ export class SingleProduct extends Component {
                                 Tuotteen sisäänosto
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink to={`${match.url}/box`}>Laatikon sisäänosto</NavLink>
-                        </li>
+                        {linkToBox}
                     </ul>
                 </div>
                 <div className="product-section-container">
@@ -76,7 +81,7 @@ export class SingleProduct extends Component {
                     />
                     <Route
                         path={`${match.path}/box`}
-                        render={() => <BoxAddStock product={product} />}
+                        render={() => <BoxAddStock product={product} box={box}/>}
                     />
                 </div>
             </React.Fragment>
@@ -94,6 +99,11 @@ const mapStateToProps = (state, props) => {
         product: state.product.products.find(
             product =>
                 product.product_id ===
+                parseInt(props.match.params.productid, 10)
+        ),
+        box: state.box.boxes.find(
+            box =>
+                box.product_id ===
                 parseInt(props.match.params.productid, 10)
         ),
         productMargin: state.productMargin.productMargin,

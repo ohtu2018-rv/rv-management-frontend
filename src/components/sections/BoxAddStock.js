@@ -17,8 +17,8 @@ export class BoxAddStock extends React.Component {
     }
 
     updateFields() {
-        //        this.barcodeInput.value =
-        //        this.productBarcodeInput.value =
+        this.barcodeInput.value = this.props.box.box_barcode;
+        this.productBarcodeInput.value = this.props.product.product_barcode;
         this.costInput.value = (this.props.product.buyprice / 100).toFixed(2);
         //        this.amountInput.value =
 
@@ -171,7 +171,9 @@ export class BoxAddStock extends React.Component {
                                 </label>
                             </Col>
                             <Col xs={9}>
-                                <label className="product-title">Twix</label>
+                                <label className="product-title">
+                                    {this.props.product.product_name}
+                                </label>
                             </Col>
                         </Row>
                         <Row>
