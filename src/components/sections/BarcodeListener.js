@@ -20,22 +20,27 @@ export class BarcodeListener extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.barcode.match('(^[0-9]{13})+$')) {
-            var product = this.props.products.find(
-                prod => prod.product_barcode === this.state.barcode
+        var product = this.props.products.find(
+            prod => prod.product_barcode === this.state.barcode
+        );
+        if (product) {
+            this.props.setProductSelected(product.product_id);
+            this.props.history.push(
+                `/products/${product.product_id}/stock`
             );
-            if (product) {
-                this.props.setProductSelected(product.product_id);
+        } else {
+            var box = this.props.boxes.find(
+                b => b.box_barcode === this.state.barcode
+            );
+            if (box) {
+                this.props.setProductSelected(box.product_id);
                 this.props.history.push(
-                    `/products/${product.product_id}/stock`
+                    `/products/${box.product_id}/box`
                 );
             } else {
                 this.props.errorMessage('Product not found');
             }
-        } else {
-            this.props.errorMessage('Invalid barcode');
         }
-
         this.setState({ barcode: '' });
     }
 
@@ -88,7 +93,8 @@ export class BarcodeListener extends Component {
 
 const mapStateToProps = state => {
     return {
-        products: state.product.products
+        products: state.product.products,
+        boxes: state.box.boxes
     };
 };
 
