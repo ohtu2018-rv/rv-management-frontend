@@ -1,4 +1,5 @@
 import { errorMessage, successMessage } from './notificationReducer';
+import { getProducts } from './productReducer';
 import boxService from '../services/boxService';
 
 export const boxActions = {
@@ -19,6 +20,24 @@ export const getBoxes = token => {
         });
     };
 };
+
+export const addStock = (barcode, box, token) => {  
+    return async dispatch => {     
+        try {
+            const res = await boxService.addStock(barcode, box, token);
+            dispatch(successMessage('Buyin completed'));
+            //dispatch(setUpgradeStock(true));
+            dispatch(getProducts(token));
+            dispatch(getBoxes(token));
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+        
+    };
+    
+};
+
 
 const boxReducer = (state = initialState, action) => {
     switch (action.type) {

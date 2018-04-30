@@ -3,6 +3,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import './styles/BoxAddStock.css';
 import { connect } from 'react-redux';
 
+import { addStock } from '../../reducers/boxReducer';
 export class BoxAddStock extends React.Component {
     constructor(props) {
         super(props);
@@ -20,8 +21,7 @@ export class BoxAddStock extends React.Component {
         this.barcodeInput.value = this.props.box.box_barcode;
         this.productBarcodeInput.value = this.props.product.product_barcode;
         this.costInput.value = (this.props.product.buyprice / 100).toFixed(2);
-        //        this.amountInput.value =
-
+        this.amountInput.value = this.props.box.items_per_box;        
         this.marginInput.value = this.props.globalMargin;
         this.calculateProductSellpriceAndBoxcost();
     }
@@ -63,6 +63,15 @@ export class BoxAddStock extends React.Component {
 
     formSubmit(event) {
         event.preventDefault();
+
+        const box = {
+            product_id: this.props.product.product_id,
+            sellprice: this.sellpriceInput.value,
+            buyprice: this.costInput.value,
+            boxes: this.quantityInput.value
+        };
+
+        this.props.addStock(this.props.box.box_barcode, box, this.props.token);
     }
 
     render() {
@@ -252,7 +261,9 @@ export class BoxAddStock extends React.Component {
     }
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    addStock
+};
 
 const mapStateToProps = state => {
     return {
