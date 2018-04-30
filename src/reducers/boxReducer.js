@@ -24,14 +24,13 @@ export const getBoxes = token => {
 export const addStock = (barcode, box, token) => {  
     return async dispatch => {     
         try {
-            const res = await boxService.addStock(barcode, box, token);
-            dispatch(successMessage('Buyin completed'));
+            await boxService.addStock(barcode, box, token);
+            dispatch(successMessage('Tuoteen lisäys varastoon onnistui'));
             //dispatch(setUpgradeStock(true));
             dispatch(getProducts(token));
             dispatch(getBoxes(token));
-            console.log(res);
         } catch (error) {
-            console.log(error);
+            dispatch(errorMessage('Virhe tuotteita lisätessä varastoon'));
         }
         
     };
