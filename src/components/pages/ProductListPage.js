@@ -10,12 +10,10 @@ import './styles/ProductListPage.css';
 import { getProducts } from '../../reducers/productReducer';
 import { getGlobalMargin } from '../../reducers/productReducer';
 import { Route } from 'react-router-dom';
-import boxService from '../../services/boxService';
 export class ProductListPage extends Component {
     componentWillMount() {
         this.props.getProducts(this.props.token);
         this.props.getGlobalMargin(this.props.token);
-        boxService.getAll(this.props.token).then(res => console.log(res))
     }
 
     render() {
