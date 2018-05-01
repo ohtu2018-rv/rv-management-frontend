@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import './styles/NewProduct.css';
 import { Route, withRouter, NavLink } from 'react-router-dom';
 import ProductForm from './ProductForm';
+import BoxForm from './BoxForm';
 
 export class NewProduct extends Component {
     render() {
@@ -35,7 +36,7 @@ export class NewProduct extends Component {
                     />
                     <Route
                         path={`${match.path}/box`}
-                        component={props => <div>TODO - BoxForm</div>}
+                        render={() => <BoxForm />}
                     />
                 </div>
             </React.Fragment>
