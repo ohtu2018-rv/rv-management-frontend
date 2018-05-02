@@ -9,9 +9,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import './styles/ProductListPage.css';
 import { getProducts } from '../../reducers/productReducer';
 import { getGlobalMargin } from '../../reducers/productReducer';
-import { Route, NavLink } from 'react-router-dom';
-import { SuccessBtn } from '../buttons/Buttons';
-
+import { Route } from 'react-router-dom';
 export class ProductListPage extends Component {
     componentWillMount() {
         this.props.getProducts(this.props.token);
