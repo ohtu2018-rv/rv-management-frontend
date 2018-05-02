@@ -6,6 +6,7 @@ import { fetchProductMargin } from './../../reducers/productMarginReducer';
 import { setProductSelected } from '../../reducers/productReducer';
 import { Route, withRouter, NavLink } from 'react-router-dom';
 import ProductAddStock from './ProductAddStock';
+import BoxAddStock from './BoxAddStock';
 
 export class SingleProduct extends Component {
     constructor(props) {
@@ -24,14 +25,21 @@ export class SingleProduct extends Component {
     componentWillUnmount() {
         this.props.setProductSelected(0);
     }
-    
+
     render() {
         const product = this.props.product;
+        const box = this.props.box;
         if (!product) {
             return <div>Valitse tuote tai lue viivakoodi.</div>;
         }
-
         const match = this.props.match;
+        
+        //link to box exist only if product has a box
+        let linkToBox = box ? 
+            <li>
+                <NavLink to={`${match.url}/box`}> Laatikon sisäänosto </NavLink>
+            </li> : 
+            <li></li>;
 
         return (
             <React.Fragment>
@@ -41,23 +49,39 @@ export class SingleProduct extends Component {
                         <h2>{product.quantity} varastossa</h2>
                     </div>
                     <div className="product-image">
-                        <img src={noImage} alt={product.product_name}/>
+                        <img src={noImage} alt={product.product_name} />
                     </div>
                 </div>
                 <div className="product-menu">
                     <ul>
-                        <li><NavLink exact to={match.url}>Perustiedot</NavLink></li>
-                        <li><NavLink to={`${match.url}/stock`}>Sisäänosto</NavLink></li>
+                        <li>
+                            <NavLink exact to={match.url}>
+                                Perustiedot
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={`${match.url}/stock`}>
+                                Tuotteen sisäänosto
+                            </NavLink>
+                        </li>
+                        {linkToBox}
                     </ul>
                 </div>
                 <div className="product-section-container">
-                    <Route 
-                        exact path={`${match.path}`} 
-                        component={props => <div>Tietojen editointi tähän.</div>}
+                    <Route
+                        exact
+                        path={`${match.path}`}
+                        component={props => (
+                            <div>Tietojen editointi tähän.</div>
+                        )}
                     />
                     <Route
                         path={`${match.path}/stock`}
-                        render={() => <ProductAddStock product={product}/>}
+                        render={() => <ProductAddStock product={product} />}
+                    />
+                    <Route
+                        path={`${match.path}/box`}
+                        render={() => <BoxAddStock product={product} box={box}/>}
                     />
                 </div>
             </React.Fragment>
@@ -73,7 +97,14 @@ const mapDispatchToProps = {
 const mapStateToProps = (state, props) => {
     return {
         product: state.product.products.find(
-            product => product.product_id === parseInt(props.match.params.productid, 10)
+            product =>
+                product.product_id ===
+                parseInt(props.match.params.productid, 10)
+        ),
+        box: state.box.boxes.find(
+            box =>
+                box.product_id ===
+                parseInt(props.match.params.productid, 10)
         ),
         productMargin: state.productMargin.productMargin,
         selectedProduct: state.product.selectedProduct,
@@ -81,4 +112,6 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleProduct));
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
+);

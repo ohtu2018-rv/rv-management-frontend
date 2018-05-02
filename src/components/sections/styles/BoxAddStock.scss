@@ -1,0 +1,55 @@
+@import "vars";
+
+.box-stocking-form {
+  box-sizing: border-box;
+
+  .row {
+    margin-bottom: 10px;
+  }
+
+  label {
+    padding-top: 5px;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    padding: 0 0 5px 0;
+    margin: 0;
+    font-size: 1.3em;
+    background: transparent;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #aaa;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  input:focus {
+    box-shadow: none;
+  }
+
+  input[type="submit"] {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  span.unit {
+    display: inline-block;
+    padding: 0;
+    margin-left: 15px;
+    font-size: 1.3em;
+  }
+
+  .product-title {
+    font-size: 1.4em;
+    color: black;
+  }
+  
+  .product-wrapper {
+    box-sizing: border-box;
+    border: 1px solid $product-section-border-color;
+    padding: 15px;
+  }
+}
