@@ -26,10 +26,38 @@ const addStock = (barcode, box, token) => {
                 headers: { Authorization: 'Bearer ' + token }
             }
         )
-        .then(res => res.data);
+        .then(res => res.data)};
+
+const createBox = (token, barcode, productCount, product) => {
+    return axios(`${process.env.REACT_APP_BACKEND_URL}/${targetUrl}/${barcode}`,
+        {
+            method: 'PUT',
+            headers: { Authorization: 'Bearer ' + token },
+            data: {
+                items_per_box: productCount,
+                product
+            }
+        }
+    ).then(res => res.data);
+};
+
+const buyInBox = (token, barcode, boxes, buyprice, sellprice) => {
+    return axios(`${process.env.REACT_APP_BACKEND_URL}/${targetUrl}/${barcode}`,
+        {
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + token },
+            data: {
+                boxes,
+                buyprice,
+                sellprice
+            }
+        }
+    ).then(res => res.data);
 };
 
 export default {
     getAll,
-    addStock
+    addStock,
+    createBox,
+    buyInBox
 };

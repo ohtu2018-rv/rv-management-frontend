@@ -8,12 +8,12 @@ import { withRouter } from 'react-router-dom';
 export class BarcodeListener extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             barcode: '',
             open: true
         };
     }
+
     handleInputEvent(event) {
         this.setState({ barcode: event.target.value });
     }
@@ -38,7 +38,15 @@ export class BarcodeListener extends Component {
                     `/products/${box.product_id}/box`
                 );
             } else {
-                this.props.errorMessage('Product not found');
+                if (window.confirm('Not found.\nWant to create a new item?')) {
+                    if (window.confirm('Create a box?')) {
+                        this.props.history.push('/products/create/box');
+                    } else {
+                        this.props.history.push('/products/create/product');
+                    }
+                } else {
+                    this.props.errorMessage('Product not found');
+                }
             }
         }
         this.setState({ barcode: '' });
