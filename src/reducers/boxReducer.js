@@ -1,5 +1,5 @@
 import { errorMessage, successMessage } from './notificationReducer';
-import { getProducts } from './productReducer';
+import { getProducts, setUpgradeStock } from './productReducer';
 import boxService from '../services/boxService';
 
 export const boxActions = {
@@ -25,8 +25,8 @@ export const addStock = (barcode, box, token) => {
     return async dispatch => {     
         try {
             await boxService.addStock(barcode, box, token);
-            dispatch(successMessage('Tuoteen lisäys varastoon onnistui'));
-            //dispatch(setUpgradeStock(true));
+            dispatch(successMessage('Tuotteen lisäys varastoon onnistui'));
+            dispatch(setUpgradeStock(true));
             dispatch(getProducts(token));
             dispatch(getBoxes(token));
         } catch (error) {
