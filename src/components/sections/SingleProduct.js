@@ -7,6 +7,7 @@ import { setProductSelected } from '../../reducers/productReducer';
 import { Route, withRouter, NavLink } from 'react-router-dom';
 import ProductAddStock from './ProductAddStock';
 import BoxAddStock from './BoxAddStock';
+import ProductEditForm from './ProductEditForm';
 
 export class SingleProduct extends Component {
     constructor(props) {
@@ -26,6 +27,10 @@ export class SingleProduct extends Component {
         this.props.setProductSelected(0);
     }
 
+    handleProductEdit = values => {
+        console.log(values);
+    };
+
     render() {
         const product = this.props.product;
         const box = this.props.box;
@@ -33,13 +38,15 @@ export class SingleProduct extends Component {
             return <div>Valitse tuote tai lue viivakoodi.</div>;
         }
         const match = this.props.match;
-        
+
         //link to box exist only if product has a box
-        let linkToBox = box ? 
+        let linkToBox = box ? (
             <li>
                 <NavLink to={`${match.url}/box`}> Laatikon sisäänosto </NavLink>
-            </li> : 
-            <li></li>;
+            </li>
+        ) : (
+            <li />
+        );
 
         return (
             <React.Fragment>
@@ -71,8 +78,11 @@ export class SingleProduct extends Component {
                     <Route
                         exact
                         path={`${match.path}`}
-                        component={props => (
-                            <div>Tietojen editointi tähän.</div>
+                        render={() => (
+                            <ProductEditForm
+                                product={product}
+                                formSubmit={this.handleProductEdit}
+                            />
                         )}
                     />
                     <Route
@@ -81,7 +91,9 @@ export class SingleProduct extends Component {
                     />
                     <Route
                         path={`${match.path}/box`}
-                        render={() => <BoxAddStock product={product} box={box}/>}
+                        render={() => (
+                            <BoxAddStock product={product} box={box} />
+                        )}
                     />
                 </div>
             </React.Fragment>
@@ -102,9 +114,7 @@ const mapStateToProps = (state, props) => {
                 parseInt(props.match.params.productid, 10)
         ),
         box: state.box.boxes.find(
-            box =>
-                box.product_id ===
-                parseInt(props.match.params.productid, 10)
+            box => box.product_id === parseInt(props.match.params.productid, 10)
         ),
         productMargin: state.productMargin.productMargin,
         selectedProduct: state.product.selectedProduct,

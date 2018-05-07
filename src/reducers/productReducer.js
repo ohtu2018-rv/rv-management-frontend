@@ -9,14 +9,17 @@ export const productActions = {
     SET_GLOBAL_MARGIN: 'SET_GLOBAL_MARGIN',
     ADD_NEW_PRODUCT: 'ADD_NEW_PRODUCT',
     SET_UPGRADESTOCK: 'SET_UPGRADESTOCK',
-    UPDATE_PRODUCT: 'UPDATE_PRODUCT'
+    UPDATE_PRODUCT: 'UPDATE_PRODUCT',
+    LOAD_FORM_DATA: 'LOAD_FORM_DATA',
+    SET_SELL_PRICE: 'SET_SELL_PRICE'
 };
 
 export const initialState = {
     selectedProduct: 0,
     products: [],
     globalMargin: 0,
-    upgradeStock: false
+    upgradeStock: false,
+    currentEditProduct: {}
 };
 
 export const setGlobalMargin = (newMargin, token) => {
@@ -36,6 +39,21 @@ export const getGlobalMargin = token => {
             type: productActions.SET_GLOBAL_MARGIN,
             globalMargin: margin.margin
         });
+    };
+};
+
+export const loadFormData = (product, globalMargin) => {
+    return {
+        type: productActions.LOAD_FORM_DATA,
+        product,
+        globalMargin
+    };
+};
+
+export const setSellPrice = sellPrice => {
+    return {
+        type: productActions.SET_SELL_PRICE,
+        sellPrice
     };
 };
 
@@ -159,6 +177,22 @@ const productReducer = (state = initialState, action) => {
     case productActions.SET_UPGRADESTOCK:
         return Object.assign({}, state, {
             upgradeStock: action.redirect
+        });
+    case productActions.LOAD_FORM_DATA:
+        return Object.assign({}, state, {
+            currentEditProduct: Object.assign({}, action.product, {
+                margin: action.globalMargin
+            })
+        });
+    case productActions.SET_SELL_PRICE:
+        return Object.assign({}, state, {
+            currentEditProduct: Object.assign(
+                {},
+                state.currentEditProduct,
+                {
+                    sellprice: action.sellPrice
+                }
+            )
         });
     default:
         return state;

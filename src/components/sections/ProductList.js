@@ -3,21 +3,38 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles/ProductList.css';
 
-import { setProductSelected } from './../../reducers/productReducer';
+import {
+    setProductSelected,
+    loadFormData
+} from './../../reducers/productReducer';
 import { productFilterType } from './../../reducers/productFilterReducer';
 import { Link } from 'react-router-dom';
+
+const prodMapper = product =>
+    Object.assign({}, product, {
+        buyprice: parseFloat(product.buyprice / 100).toFixed(2),
+        sellprice: parseFloat(product.sellprice / 100).toFixed(2)
+    });
 
 const sorters = {
     [productFilterType.NONE]: (a, b) => a.product_id - b.product_id,
     [productFilterType.NAME_ASC]: (a, b) =>
-        a.product_name.toLowerCase().trim() < b.product_name.toLowerCase().trim()
+        a.product_name.toLowerCase().trim() <
+        b.product_name.toLowerCase().trim()
             ? -1
-            : b.product_name.toLowerCase().trim() === a.product_name.toLowerCase().trim() ? 0 : 1,
+            : b.product_name.toLowerCase().trim() ===
+              a.product_name.toLowerCase().trim()
+                ? 0
+                : 1,
 
     [productFilterType.NAME_DESC]: (a, b) =>
-        a.product_name.toLowerCase().trim() < b.product_name.toLowerCase().trim()
+        a.product_name.toLowerCase().trim() <
+        b.product_name.toLowerCase().trim()
             ? 1
-            : b.product_name.toLowerCase().trim() === a.product_name.toLowerCase().trim() ? 0 : -1,
+            : b.product_name.toLowerCase().trim() ===
+              a.product_name.toLowerCase().trim()
+                ? 0
+                : -1,
 
     [productFilterType.STOCK_LOW]: (a, b) => a.stock - b.stock,
 
@@ -52,6 +69,10 @@ export class ProductList extends Component {
                                         this.props.setProductSelected(
                                             product.product_id
                                         );
+                                        this.props.loadFormData(
+                                            prodMapper(product),
+                                            this.props.margin
+                                        );
                                         document
                                             .getElementById('barcodeInput')
                                             .focus();
@@ -65,9 +86,7 @@ export class ProductList extends Component {
                                 </Link>
                             ) : (
                                 <Link
-                                    innerRef={active =>
-                                        (this.active = active)
-                                    }
+                                    innerRef={active => (this.active = active)}
                                     to={`/products/${product.product_id}`}
                                     key={product.product_id}
                                     className="product active"
@@ -87,13 +106,15 @@ export class ProductList extends Component {
 }
 
 const mapDispatchToProps = {
-    setProductSelected
+    setProductSelected,
+    loadFormData
 };
 
 const mapStateToProps = state => {
     return {
         products: state.product.products,
-        sortedBy: state.productFilter.sortedBy
+        sortedBy: state.productFilter.sortedBy,
+        margin: state.product.globalMargin
     };
 };
 
