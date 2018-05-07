@@ -8,9 +8,9 @@ export const categoryActions = {
     SET_CATEGORIES: 'SET_CATEGORIES'
 };
 
-export const fetchCategories = () => {
+export const getCategories = token => {
     return async dispatch => {
-        const categories = await categoryService.getAll();
+        const categories = await categoryService.getAll(token);
         dispatch({
             type: categoryActions.SET_CATEGORIES,
             categories

@@ -8,6 +8,7 @@ import { reducer as formReducer } from 'redux-form';
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import categoryReducer from './reducers/categoryReducer';
 
 // Combine reducers
 const reducer = combineReducers({
@@ -17,7 +18,8 @@ const reducer = combineReducers({
     productFilter: productFilterReducer,
     notification: notificationReducer,
     box: boxReducer,
-    form: formReducer
+    form: formReducer,
+    category: categoryReducer
 });
 
 // Create store

@@ -10,12 +10,14 @@ import './styles/ProductListPage.css';
 import { getProducts } from '../../reducers/productReducer';
 import { getBoxes } from '../../reducers/boxReducer';
 import { getGlobalMargin } from '../../reducers/productReducer';
+import { getCategories } from '../../reducers/categoryReducer';
 import { Route } from 'react-router-dom';
 export class ProductListPage extends Component {
     componentWillMount() {
         this.props.getProducts(this.props.token);
         this.props.getGlobalMargin(this.props.token);
         this.props.getBoxes(this.props.token);
+        this.props.getCategories(this.props.token);
     }
 
     render() {
@@ -57,7 +59,8 @@ export class ProductListPage extends Component {
 const mapDispatchToProps = {
     getProducts,
     getGlobalMargin,
-    getBoxes
+    getBoxes,
+    getCategories
 };
 
 const mapStateToProps = state => {

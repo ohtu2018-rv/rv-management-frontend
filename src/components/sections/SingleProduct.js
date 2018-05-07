@@ -28,7 +28,11 @@ export class SingleProduct extends Component {
     }
 
     handleProductEdit = values => {
+        values.sellprice = parseFloat(values.sellprice) * 100;
+        values.buyprice = parseFloat(values.buyprice) * 100;
         console.log(values);
+
+        // Back-end call here
     };
 
     render() {
@@ -81,7 +85,7 @@ export class SingleProduct extends Component {
                         render={() => (
                             <ProductEditForm
                                 product={product}
-                                formSubmit={this.handleProductEdit}
+                                onSubmit={this.handleProductEdit}
                             />
                         )}
                     />

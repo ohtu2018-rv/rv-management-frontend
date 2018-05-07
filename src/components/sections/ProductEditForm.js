@@ -6,7 +6,16 @@ import { Link } from 'react-router-dom';
 import { loadFormData, setSellPrice } from './../../reducers/productReducer';
 import './styles/ProductEditForm.css';
 
+// Validators (consider moving these to a global validation module)
 const required = value => (value ? undefined : 'Kenttä ei saa olla tyhjä');
+const minLength = (field, min) => value =>
+    value && value.length < min
+        ? `${field} on oltava pidempi kuin ${min} merkki(ä)`
+        : undefined;
+const maxLength = (field, max) => value =>
+    value && value.length > max
+        ? `${field} on oltava lyhyempi kuin ${max} merkki(ä)`
+        : undefined;
 
 const renderField = ({
     input,
@@ -57,7 +66,10 @@ export class ProductEditForm extends Component {
             return value;
         };
         return (
-            <form onSubmit={this.formSubmit} className="product-edit-form">
+            <form
+                onSubmit={this.props.handleSubmit}
+                className="product-edit-form"
+            >
                 <Row>
                     <Col xs={3}>
                         <label htmlFor="barcode">Viivakoodi</label>
@@ -84,7 +96,10 @@ export class ProductEditForm extends Component {
                             name="product_name"
                             placeholder="Tuotteen nimi"
                             type="text"
-                            validate={[required]}
+                            validate={[
+                                required,
+                                maxLength('Tuotteen nimen', 64)
+                            ]}
                         />
                     </Col>
                 </Row>
@@ -93,8 +108,21 @@ export class ProductEditForm extends Component {
                         <label htmlFor="category">Kategoria</label>
                     </Col>
                     <Col xs={8}>
-                        <Field component="select" id="category" name="category">
-                            <option>Valitse kategoria..</option>
+                        <Field
+                            component="select"
+                            id="category"
+                            name="product_group"
+                        >
+                            <option disabled>Valitse kategoria..</option>
+                            {this.props.categories &&
+                                this.props.categories.map(category => (
+                                    <option
+                                        key={category.category_id}
+                                        value={category.category_id}
+                                    >
+                                        {category.category_description}
+                                    </option>
+                                ))}
                         </Field>
                     </Col>
                 </Row>
@@ -112,20 +140,6 @@ export class ProductEditForm extends Component {
                             step="1"
                             min="0"
                             defaultValue="42"
-                        />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={3}>
-                        <label htmlFor="descr">Kuvaus</label>
-                    </Col>
-                    <Col xs={8}>
-                        <Field
-                            component={renderField}
-                            id="descr"
-                            name="descr"
-                            placeholder="Kuvaus"
-                            type="text"
                         />
                     </Col>
                 </Row>
@@ -232,7 +246,8 @@ ProductEditForm = reduxForm({
 const mapStateToProps = state => {
     return {
         initialValues: state.product.currentEditProduct,
-        margin: state.product.globalMargin
+        margin: state.product.globalMargin,
+        categories: state.category.categories.categories
     };
 };
 
