@@ -19,16 +19,6 @@ export class HeaderNav extends Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/users" activeClassName={activeClass}>
-                            Käyttäjät
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/reports" activeClassName={activeClass}>
-                            Raportit
-                        </NavLink>
-                    </li>
-                    <li>
                         <NavLink
                             to="/products/create/product"
                             activeClassName={activeClass}
