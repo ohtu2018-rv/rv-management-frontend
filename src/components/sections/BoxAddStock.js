@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import { addStock } from '../../reducers/boxReducer';
+import { toggleBarcodeVisibility } from '../../reducers/barcodeListenerReducer';
 import { setUpgradeStock } from '../../reducers/productReducer';
+
 export class BoxAddStock extends React.Component {
     constructor(props) {
         super(props);
@@ -55,6 +57,7 @@ export class BoxAddStock extends React.Component {
 
     componentDidMount() {
         this.updateFields();
+        this.props.toggleBarcodeVisibility(false);
     }
 
     componentDidUpdate() {
@@ -63,7 +66,9 @@ export class BoxAddStock extends React.Component {
         }
     }
 
-    componentWillUnmount() {}
+    componentWillUnmount() {
+        this.props.toggleBarcodeVisibility(true);
+    }
 
     formSubmit(event) {
         event.preventDefault();
@@ -271,14 +276,16 @@ export class BoxAddStock extends React.Component {
 
 const mapDispatchToProps = {
     addStock,
-    setUpgradeStock
+    setUpgradeStock,
+    toggleBarcodeVisibility
 };
 
 const mapStateToProps = state => {
     return {
         globalMargin: state.product.globalMargin,
         token: state.authentication.accessToken,
-        upgradeStock: state.product.upgradeStock
+        upgradeStock: state.product.upgradeStock,
+        barcodeVisible: state.barcodeListener.visible
     };
 };
 
