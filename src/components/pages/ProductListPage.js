@@ -11,6 +11,7 @@ import { getProducts } from '../../reducers/productReducer';
 import { getBoxes } from '../../reducers/boxReducer';
 import { getGlobalMargin } from '../../reducers/productReducer';
 import { Route } from 'react-router-dom';
+
 export class ProductListPage extends Component {
     componentWillMount() {
         this.props.getProducts(this.props.token);
