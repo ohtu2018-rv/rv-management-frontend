@@ -59,10 +59,13 @@ export class ProductEditForm extends Component {
 
     render() {
         const calculateSellprice = (value, previousValue, allValues) => {
-            allValues.sellprice = (
-                parseFloat(allValues.buyprice) *
-                ((100 + parseFloat(allValues.margin)) / 100)
-            ).toFixed(2);
+            this.props.change(
+                'sellprice',
+                (
+                    parseFloat(allValues.buyprice) *
+                    ((100 + parseFloat(allValues.margin)) / 100)
+                ).toFixed(2)
+            );
             return value;
         };
         return (
