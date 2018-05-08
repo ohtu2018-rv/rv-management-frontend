@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Row, Col } from 'react-flexbox-grid';
-import { Link } from 'react-router-dom';
-import { loadFormData, setSellPrice } from './../../reducers/productReducer';
+import { Link, withRouter } from 'react-router-dom';
 import './styles/ProductEditForm.css';
 
 // Validators (consider moving these to a global validation module)
@@ -53,10 +52,6 @@ const prodMapper = product =>
     });
 
 export class ProductEditForm extends Component {
-    componentDidMount() {
-        this.props.load(prodMapper(this.props.product), this.props.margin);
-    }
-
     render() {
         const calculateSellprice = (value, previousValue, allValues) => {
             this.props.change(
@@ -246,17 +241,25 @@ ProductEditForm = reduxForm({
     enableReinitialize: true
 })(ProductEditForm);
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
     return {
-        initialValues: state.product.currentEditProduct,
-        margin: state.product.globalMargin,
+        initialValues: Object.assign(
+            {},
+            prodMapper(
+                state.product.products.find(
+                    product =>
+                        product.product_id ===
+                        parseInt(props.match.params.productid, 10)
+                )
+            ),
+            { margin: state.product.globalMargin }
+        ),
         categories: state.category.categories.categories
     };
 };
 
-const mapDispatchToProps = {
-    load: loadFormData,
-    setSellPrice
-};
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductEditForm);
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(ProductEditForm)
+);

@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import './styles/SingleProduct.css';
 import noImage from './../../images/no_image.png';
 import { fetchProductMargin } from './../../reducers/productMarginReducer';
-import { setProductSelected } from '../../reducers/productReducer';
+import {
+    setProductSelected,
+    updateProduct
+} from '../../reducers/productReducer';
 import { Route, withRouter, NavLink } from 'react-router-dom';
 import ProductAddStock from './ProductAddStock';
 import BoxAddStock from './BoxAddStock';
@@ -31,8 +34,8 @@ export class SingleProduct extends Component {
         values.sellprice = parseFloat(values.sellprice) * 100;
         values.buyprice = parseFloat(values.buyprice) * 100;
         console.log(values);
-
         // Back-end call here
+        this.props.updateProduct(values);
     };
 
     render() {
@@ -107,7 +110,8 @@ export class SingleProduct extends Component {
 
 const mapDispatchToProps = {
     fetchProductMargin,
-    setProductSelected
+    setProductSelected,
+    updateProduct
 };
 
 const mapStateToProps = (state, props) => {

@@ -3,18 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './styles/ProductList.css';
 
-import {
-    setProductSelected,
-    loadFormData
-} from './../../reducers/productReducer';
+import { setProductSelected } from './../../reducers/productReducer';
 import { productFilterType } from './../../reducers/productFilterReducer';
 import { Link } from 'react-router-dom';
-
-const prodMapper = product =>
-    Object.assign({}, product, {
-        buyprice: parseFloat(product.buyprice / 100).toFixed(2),
-        sellprice: parseFloat(product.sellprice / 100).toFixed(2)
-    });
 
 const sorters = {
     [productFilterType.NONE]: (a, b) => a.product_id - b.product_id,
@@ -69,10 +60,6 @@ export class ProductList extends Component {
                                         this.props.setProductSelected(
                                             product.product_id
                                         );
-                                        this.props.loadFormData(
-                                            prodMapper(product),
-                                            this.props.margin
-                                        );
                                         document
                                             .getElementById('barcodeInput')
                                             .focus();
@@ -106,8 +93,7 @@ export class ProductList extends Component {
 }
 
 const mapDispatchToProps = {
-    setProductSelected,
-    loadFormData
+    setProductSelected
 };
 
 const mapStateToProps = state => {
