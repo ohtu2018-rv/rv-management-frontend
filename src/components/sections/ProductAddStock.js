@@ -4,6 +4,7 @@ import './styles/ProductAddStock.css';
 import { connect } from 'react-redux';
 
 import { addStock , setUpgradeStock } from '../../reducers/productReducer';
+import { toggleBarcodeVisibility } from '../../reducers/barcodeListenerReducer';
 import { Redirect, withRouter } from 'react-router-dom';
 
 export class ProductAddStock extends React.Component {
@@ -33,6 +34,7 @@ export class ProductAddStock extends React.Component {
 
     componentDidMount() {
         this.updateFields();
+        this.props.toggleBarcodeVisibility(false);
     }
 
     componentDidUpdate() {
@@ -46,6 +48,7 @@ export class ProductAddStock extends React.Component {
 
     componentWillUnmount() {
         this.props.setUpgradeStock(false);
+        this.props.toggleBarcodeVisibility(true);
     }
     
     formSubmit(event) {
@@ -164,7 +167,8 @@ export class ProductAddStock extends React.Component {
 
 const mapDispatchToProps = {
     addStock,
-    setUpgradeStock
+    setUpgradeStock,
+    toggleBarcodeVisibility
 };
 
 
@@ -172,7 +176,8 @@ const mapStateToProps = state => {
     return {
         globalMargin: state.product.globalMargin,
         token: state.authentication.accessToken,
-        upgradeStock: state.product.upgradeStock
+        upgradeStock: state.product.upgradeStock,
+        barcodeVisibile: state.barcodeListener.visible
     };
 };
 

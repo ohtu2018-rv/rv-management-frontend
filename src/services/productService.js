@@ -24,8 +24,8 @@ const addProduct = (product, token) => {
 const updateProduct = (product, token) => {
     return axios
         .put(
-            `${process.env.REACT_APP_BACKEND_URL}/${targetUrl}/${
-                product.product_id
+            `${process.env.REACT_APP_BACKEND_URL}/${targetUrl}/product/${
+                product.itemid
             }`,
 
             product,

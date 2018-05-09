@@ -5,6 +5,7 @@ import productFilterReducer from './reducers/productFilterReducer';
 import notificationReducer from './reducers/notificationReducer';
 import boxReducer from './reducers/boxReducer';
 import { reducer as formReducer } from 'redux-form';
+import barcodeListenerReducer from './reducers/barcodeListenerReducer';
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -19,7 +20,8 @@ const reducer = combineReducers({
     notification: notificationReducer,
     box: boxReducer,
     form: formReducer,
-    category: categoryReducer
+    category: categoryReducer,
+    barcodeListener: barcodeListenerReducer
 });
 
 // Create store

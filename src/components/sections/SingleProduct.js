@@ -32,11 +32,10 @@ export class SingleProduct extends Component {
 
     handleProductEdit = values => {
         const product = {
-            product_id: this.props.selectedProduct,
-            barcode: values.product_barcode,
-            product_group: values.product_group,
-            product_name: values.product_name,
-            product_weight: values.product_weight || 0,
+            itemid: this.props.selectedProduct,
+            pgrpid: values.product_group,
+            descr: values.product_name,
+            weight: values.product_weight || 0,
             buyprice: parseFloat(values.buyprice) * 100,
             sellprice: parseFloat(values.sellprice) * 100,
             quantity: values.quantity
