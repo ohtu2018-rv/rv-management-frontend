@@ -1,4 +1,10 @@
 node_modules/
 src/**/*.css
+coverage/
+**/.DS_Store
 .DS_Store
 .vscode
+.env
+build/
+yarn-error.log
+output.txt

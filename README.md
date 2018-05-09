@@ -1,6 +1,6 @@
 # rv-management-frontend
 
-Stating [![Build Status](https://travis-ci.org/ohtu2018-rv/rv-management-frontend.svg?branch=develop)](https://travis-ci.org/ohtu2018-rv/rv-management-frontend)
+Staging [![Build Status](https://travis-ci.org/ohtu2018-rv/rv-management-frontend.svg?branch=develop)](https://travis-ci.org/ohtu2018-rv/rv-management-frontend)
 
 Production [![Build Status](https://travis-ci.org/ohtu2018-rv/rv-management-frontend.svg?branch=master)](https://travis-ci.org/ohtu2018-rv/rv-management-frontend)
 

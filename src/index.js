@@ -1,18 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
 import './reset.css';
+import './index.css';
 
 import App from './App';
 
-// Import reducers
-
-// Combine reducers
-
-// Create store
+// redux store
+import store from './store';
 
 // Load config
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+);

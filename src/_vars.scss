@@ -1,0 +1,17 @@
+$font-baseline-size: 16px;
+$header-background: #333;
+$body-background: #fff;
+$base-padding: 15px;
+$base-margin: 5px;
+$base-border-radius: 10px;
+// Notifications
+$notification-font-size: 12pt;
+$notification-border-radius: $base-border-radius;
+$error-notification-bgcolor: rgba(189, 61, 52, 0.9);
+$error-notification-textcolor: white;
+$error-notification-cross-width: 2;
+$success-notification-bgcolor: rgba(52, 189, 63, 0.9);
+$success-notification-textcolor: white;
+$shadow-border-radius: $base-border-radius;
+$box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+$product-section-border-color: #aaa;
