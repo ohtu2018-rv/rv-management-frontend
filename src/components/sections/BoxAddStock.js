@@ -2,10 +2,11 @@ import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import './styles/BoxAddStock.css';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import { addStock } from '../../reducers/boxReducer';
 import { setUpgradeStock } from '../../reducers/productReducer';
+
 export class BoxAddStock extends React.Component {
     constructor(props) {
         super(props);
@@ -20,12 +21,14 @@ export class BoxAddStock extends React.Component {
     }
 
     updateFields() {
-        this.barcodeInput.value = this.props.box.box_barcode;
-        this.productBarcodeInput.value = this.props.product.product_barcode;
-        this.costInput.value = (this.props.product.buyprice / 100).toFixed(2);
-        this.amountInput.value = this.props.box.items_per_box;
-        this.marginInput.value = this.props.globalMargin;
-        this.calculateProductSellpriceAndBoxcost();
+        if (this.props.box) {
+            this.barcodeInput.value = this.props.box.box_barcode;
+            this.productBarcodeInput.value = this.props.product.product_barcode;
+            this.costInput.value = (this.props.product.buyprice / 100).toFixed(2);
+            this.amountInput.value = this.props.box.items_per_box;
+            this.marginInput.value = this.props.globalMargin;
+            this.calculateProductSellpriceAndBoxcost();
+        }
     }
 
     calculateProductSellprice() {
@@ -60,6 +63,9 @@ export class BoxAddStock extends React.Component {
     componentDidUpdate() {
         if (!this.props.upgradeStock) {
             this.updateFields();
+        } else {
+            const link = '/products/' + this.props.product.product_id;
+            this.props.history.push(link);
         }
     }
 
@@ -79,10 +85,6 @@ export class BoxAddStock extends React.Component {
     }
 
     render() {
-        if (this.props.upgradeStock) {
-            const link = '/products/' + this.props.product.product_id;
-            return <Redirect to={link} />;
-        }
         return (
             <div className="box-stocking-form">
                 <form onSubmit={this.formSubmit}>
@@ -157,6 +159,7 @@ export class BoxAddStock extends React.Component {
                                 ref={input => {
                                     this.amountInput = input;
                                 }}
+                                disabled
                             />
                             <span className="unit">kpl</span>
                         </Col>
@@ -282,4 +285,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoxAddStock);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BoxAddStock));

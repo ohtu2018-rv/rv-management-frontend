@@ -13,7 +13,7 @@ import { getGlobalMargin } from '../../reducers/productReducer';
 import { Route } from 'react-router-dom';
 
 export class ProductListPage extends Component {
-    componentWillMount() {
+    componentDidMount() {
         this.props.getProducts(this.props.token);
         this.props.getGlobalMargin(this.props.token);
         this.props.getBoxes(this.props.token);
