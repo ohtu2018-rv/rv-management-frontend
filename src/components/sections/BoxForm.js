@@ -9,8 +9,17 @@ import {
     errorMessage
 } from './../../reducers/notificationReducer';
 import { getProducts } from '../../reducers/productReducer';
+import { toggleBarcodeVisibility } from '../../reducers/barcodeListenerReducer';
 
 export class BoxForm extends Component {
+    componentDidMount() {
+        this.props.toggleBarcodeVisibility(false);
+    }
+
+    componentWillUnmount() {
+        this.props.toggleBarcodeVisibility(true);
+    }
+
     formSubmit = async event => {
         event.preventDefault();
         const buyprice = this.getParsedBuyInPrice();
@@ -227,7 +236,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     successMessage,
     errorMessage,
-    getProducts
+    getProducts,
+    toggleBarcodeVisibility
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoxForm);
