@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './styles/ProductList.css';
 
@@ -60,9 +59,6 @@ export class ProductList extends Component {
                                         this.props.setProductSelected(
                                             product.product_id
                                         );
-                                        document
-                                            .getElementById('barcodeInput')
-                                            .focus();
                                     }}
                                 >
                                     <span>
