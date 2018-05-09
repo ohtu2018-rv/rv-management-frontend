@@ -21,6 +21,19 @@ const addProduct = (product, token) => {
         .then(res => res.data);
 };
 
+const updateProduct = (product, token) => {
+    return axios
+        .put(
+            `${process.env.REACT_APP_BACKEND_URL}/${targetUrl}/product/${
+                product.itemid
+            }`,
+
+            product,
+            { headers: { Authorization: 'Bearer ' + token } }
+        )
+        .then(res => res.data);
+};
+
 const addStock = (token, product) => {
     return axios
         .post(
@@ -50,5 +63,6 @@ const addStock = (token, product) => {
 export default {
     getAll,
     addProduct,
+    updateProduct,
     addStock
 };
