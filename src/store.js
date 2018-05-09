@@ -4,6 +4,7 @@ import productMarginReducer from './reducers/productMarginReducer';
 import productFilterReducer from './reducers/productFilterReducer';
 import notificationReducer from './reducers/notificationReducer';
 import boxReducer from './reducers/boxReducer';
+import barcodeListenerReducer from './reducers/barcodeListenerReducer';
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -16,7 +17,8 @@ const reducer = combineReducers({
     productMargin: productMarginReducer,
     productFilter: productFilterReducer,
     notification: notificationReducer,
-    box: boxReducer
+    box: boxReducer,
+    barcodeListener: barcodeListenerReducer
 });
 
 // Create store
