@@ -159,6 +159,7 @@ export class BoxAddStock extends React.Component {
                                 ref={input => {
                                     this.amountInput = input;
                                 }}
+                                disabled
                             />
                             <span className="unit">kpl</span>
                         </Col>
