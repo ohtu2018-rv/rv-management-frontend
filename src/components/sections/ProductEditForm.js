@@ -3,14 +3,11 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Row, Col } from 'react-flexbox-grid';
 import { Link, withRouter } from 'react-router-dom';
+import { toggleBarcodeVisibility } from './../../reducers/barcodeListenerReducer';
 import './styles/ProductEditForm.css';
 
 // Validators (consider moving these to a global validation module)
 const required = value => (value ? undefined : 'Kenttä ei saa olla tyhjä');
-/*const minLength = (field, min) => value =>
-    value && value.length < min
-        ? `${field} on oltava pidempi kuin ${min} merkki(ä)`
-        : undefined;*/
 const maxLength = (field, max) => value =>
     value && value.length > max
         ? `${field} on oltava lyhyempi kuin ${max} merkki(ä)`
@@ -52,6 +49,12 @@ const prodMapper = product =>
     });
 
 export class ProductEditForm extends Component {
+    componentDidMount() {
+        this.props.toggleBarcodeVisibility(false);
+    }
+    componentWillUnmount() {
+        this.props.toggleBarcodeVisibility(true);
+    }
     render() {
         const calculateSellprice = (value, previousValue, allValues) => {
             this.props.change(
@@ -258,7 +261,9 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    toggleBarcodeVisibility
+};
 
 export default withRouter(
     connect(mapStateToProps, mapDispatchToProps)(ProductEditForm)

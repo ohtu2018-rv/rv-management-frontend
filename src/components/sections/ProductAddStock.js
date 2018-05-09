@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { addStock , setUpgradeStock } from '../../reducers/productReducer';
 import { toggleBarcodeVisibility } from '../../reducers/barcodeListenerReducer';
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 export class ProductAddStock extends React.Component {
 

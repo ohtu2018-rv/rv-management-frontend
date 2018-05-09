@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import './styles/BoxAddStock.css';
 import { connect } from 'react-redux';
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { addStock } from '../../reducers/boxReducer';
 import { toggleBarcodeVisibility } from '../../reducers/barcodeListenerReducer';
