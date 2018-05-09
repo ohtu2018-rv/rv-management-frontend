@@ -8,6 +8,7 @@ import {
     successMessage,
     errorMessage
 } from './../../reducers/notificationReducer';
+import { getProducts } from '../../reducers/productReducer';
 
 export class BoxForm extends Component {
     formSubmit = async event => {
@@ -49,6 +50,7 @@ export class BoxForm extends Component {
                 singleItemBuyPrice,
                 singleItemSellPrice
             );
+            this.props.getProducts(this.props.token);
             this.barcodeInput.value = '';
             this.countInput.value = 0;
             this.buyInInput.value = 0;
@@ -224,7 +226,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     successMessage,
-    errorMessage
+    errorMessage,
+    getProducts
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoxForm);
