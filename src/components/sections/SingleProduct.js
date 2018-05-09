@@ -31,11 +31,20 @@ export class SingleProduct extends Component {
     }
 
     handleProductEdit = values => {
-        values.sellprice = parseFloat(values.sellprice) * 100;
-        values.buyprice = parseFloat(values.buyprice) * 100;
-        console.log(values);
-        // Back-end call here
-        this.props.updateProduct(values);
+        const product = {
+            product_id: this.props.selectedProduct,
+            barcode: values.product_barcode,
+            product_group: values.product_group,
+            product_name: values.product_name,
+            product_weight: values.product_weight || 0,
+            buyprice: parseFloat(values.buyprice) * 100,
+            sellprice: parseFloat(values.sellprice) * 100,
+            quantity: values.quantity
+        };
+        console.log(product);
+
+        // Back-end call here to /api/v1/admin/boxes/barcode
+        this.props.updateProduct(product, this.props.token);
     };
 
     render() {
@@ -126,7 +135,8 @@ const mapStateToProps = (state, props) => {
         ),
         productMargin: state.productMargin.productMargin,
         selectedProduct: state.product.selectedProduct,
-        globalMargin: state.product.globalMargin
+        globalMargin: state.product.globalMargin,
+        token: state.authentication.accessToken
     };
 };
 

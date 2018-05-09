@@ -7,10 +7,10 @@ import './styles/ProductEditForm.css';
 
 // Validators (consider moving these to a global validation module)
 const required = value => (value ? undefined : 'Kenttä ei saa olla tyhjä');
-const minLength = (field, min) => value =>
+/*const minLength = (field, min) => value =>
     value && value.length < min
         ? `${field} on oltava pidempi kuin ${min} merkki(ä)`
-        : undefined;
+        : undefined;*/
 const maxLength = (field, max) => value =>
     value && value.length > max
         ? `${field} on oltava lyhyempi kuin ${max} merkki(ä)`
@@ -131,13 +131,12 @@ export class ProductEditForm extends Component {
                     <Col xs={8}>
                         <Field
                             component={renderField}
-                            id="weight"
-                            name="weight"
+                            id="product_weight"
+                            name="product_weight"
                             type="number"
                             placeholder="Paino"
                             step="1"
                             min="0"
-                            defaultValue="42"
                         />
                     </Col>
                 </Row>
@@ -156,7 +155,6 @@ export class ProductEditForm extends Component {
                             placeholder="Sisäänostohinta"
                             step="0.01"
                             min="0"
-                            defaultValue="0"
                             validate={[required]}
                             normalize={calculateSellprice}
                         />
@@ -172,6 +170,7 @@ export class ProductEditForm extends Component {
                             id="margin"
                             name="margin"
                             type="number"
+                            placeholder="Kate"
                             step="1"
                             min="0"
                             normalize={calculateSellprice}
@@ -188,6 +187,7 @@ export class ProductEditForm extends Component {
                             id="sellprice"
                             name="sellprice"
                             type="number"
+                            placeholder="Myyntihinta"
                             step="0.01"
                             min="0"
                             normalize={calculateSellprice}
@@ -203,9 +203,9 @@ export class ProductEditForm extends Component {
                             component="input"
                             id="quantity"
                             name="quantity"
+                            placeholder="Varastosaldo"
                             type="number"
                             step="1"
-                            defaultValue="0"
                             validate={[required]}
                         />
                     </Col>

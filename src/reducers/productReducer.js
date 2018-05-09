@@ -104,7 +104,21 @@ export const setUpgradeStock = value => {
     };
 };
 
-export const updateProduct = product => {};
+export const updateProduct = (product, token) => {
+    return async dispatch => {
+        try {
+            const updatedProduct = await productService.updateProduct(
+                product,
+                token
+            );
+            console.log(updatedProduct);
+            dispatch(getProducts(token));
+            dispatch(successMessage('Tuotteen päivitys onnistui'));
+        } catch (err) {
+            dispatch(errorMessage('Tuotteen päivitys epäonnistui'));
+        }
+    };
+};
 
 //fix this:now works with updating products by requesting whole productlist from backend
 export const addStock = (product, token) => {
