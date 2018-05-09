@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { addStock , setUpgradeStock } from '../../reducers/productReducer';
 import { toggleBarcodeVisibility } from '../../reducers/barcodeListenerReducer';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 export class ProductAddStock extends React.Component {
 
@@ -17,9 +17,11 @@ export class ProductAddStock extends React.Component {
     }
 
     updateFields() {
-        this.barcodeInput.value = this.props.product.product_barcode;
-        this.marginInput.value = this.props.globalMargin;
-        this.calculateSellprice();
+        if (this.props.product) {
+            this.barcodeInput.value = this.props.product.product_barcode;
+            this.marginInput.value = this.props.globalMargin;
+            this.calculateSellprice();
+        }
     }
 
     calculateSellprice() {
@@ -38,6 +40,9 @@ export class ProductAddStock extends React.Component {
     componentDidUpdate() {
         if (!this.props.upgradeStock) {
             this.updateFields();
+        } else {
+            const link = '/products/' + this.props.product.product_id;         
+            this.props.history.push(link);
         }
     }
 
@@ -61,10 +66,6 @@ export class ProductAddStock extends React.Component {
     }
 
     render() {
-        if (this.props.upgradeStock) {
-            const link = '/products/' + this.props.product.product_id;         
-            return <Redirect to={ link }/>;
-        }
         return (
             <div className="product-stocking-form">
                 <form onSubmit={this.formSubmit}>
@@ -180,4 +181,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductAddStock);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductAddStock));
