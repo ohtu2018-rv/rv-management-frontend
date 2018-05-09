@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 import './styles/SingleProduct.css';
 import noImage from './../../images/no_image.png';
 import { fetchProductMargin } from './../../reducers/productMarginReducer';
-import { setProductSelected } from '../../reducers/productReducer';
+import {
+    setProductSelected,
+    updateProduct
+} from '../../reducers/productReducer';
 import { Route, withRouter, NavLink } from 'react-router-dom';
 import ProductAddStock from './ProductAddStock';
 import BoxAddStock from './BoxAddStock';
+import ProductEditForm from './ProductEditForm';
 
 export class SingleProduct extends Component {
     constructor(props) {
@@ -26,6 +30,22 @@ export class SingleProduct extends Component {
         this.props.setProductSelected(0);
     }
 
+    handleProductEdit = values => {
+        const product = {
+            itemid: this.props.selectedProduct,
+            pgrpid: values.product_group,
+            descr: values.product_name,
+            weight: values.product_weight || 0,
+            buyprice: parseFloat(values.buyprice) * 100,
+            sellprice: parseFloat(values.sellprice) * 100,
+            quantity: values.quantity
+        };
+        console.log(product);
+
+        // Back-end call here to /api/v1/admin/boxes/barcode
+        this.props.updateProduct(product, this.props.token);
+    };
+
     render() {
         const product = this.props.product;
         const box = this.props.box;
@@ -33,13 +53,15 @@ export class SingleProduct extends Component {
             return <div>Valitse tuote tai lue viivakoodi.</div>;
         }
         const match = this.props.match;
-        
+
         //link to box exist only if product has a box
-        let linkToBox = box ? 
+        let linkToBox = box ? (
             <li>
                 <NavLink to={`${match.url}/box`}> Laatikon sisäänosto </NavLink>
-            </li> : 
-            <li></li>;
+            </li>
+        ) : (
+            <li />
+        );
 
         return (
             <React.Fragment>
@@ -71,8 +93,11 @@ export class SingleProduct extends Component {
                     <Route
                         exact
                         path={`${match.path}`}
-                        component={props => (
-                            <div>Tietojen editointi tähän.</div>
+                        render={() => (
+                            <ProductEditForm
+                                product={product}
+                                onSubmit={this.handleProductEdit}
+                            />
                         )}
                     />
                     <Route
@@ -81,7 +106,9 @@ export class SingleProduct extends Component {
                     />
                     <Route
                         path={`${match.path}/box`}
-                        render={() => <BoxAddStock product={product} box={box}/>}
+                        render={() => (
+                            <BoxAddStock product={product} box={box} />
+                        )}
                     />
                 </div>
             </React.Fragment>
@@ -91,7 +118,8 @@ export class SingleProduct extends Component {
 
 const mapDispatchToProps = {
     fetchProductMargin,
-    setProductSelected
+    setProductSelected,
+    updateProduct
 };
 
 const mapStateToProps = (state, props) => {
@@ -102,13 +130,12 @@ const mapStateToProps = (state, props) => {
                 parseInt(props.match.params.productid, 10)
         ),
         box: state.box.boxes.find(
-            box =>
-                box.product_id ===
-                parseInt(props.match.params.productid, 10)
+            box => box.product_id === parseInt(props.match.params.productid, 10)
         ),
         productMargin: state.productMargin.productMargin,
         selectedProduct: state.product.selectedProduct,
-        globalMargin: state.product.globalMargin
+        globalMargin: state.product.globalMargin,
+        token: state.authentication.accessToken
     };
 };
 

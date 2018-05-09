@@ -4,11 +4,12 @@ import productMarginReducer from './reducers/productMarginReducer';
 import productFilterReducer from './reducers/productFilterReducer';
 import notificationReducer from './reducers/notificationReducer';
 import boxReducer from './reducers/boxReducer';
+import { reducer as formReducer } from 'redux-form';
 import barcodeListenerReducer from './reducers/barcodeListenerReducer';
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-
+import categoryReducer from './reducers/categoryReducer';
 
 // Combine reducers
 const reducer = combineReducers({
@@ -18,6 +19,8 @@ const reducer = combineReducers({
     productFilter: productFilterReducer,
     notification: notificationReducer,
     box: boxReducer,
+    form: formReducer,
+    category: categoryReducer,
     barcodeListener: barcodeListenerReducer
 });
 

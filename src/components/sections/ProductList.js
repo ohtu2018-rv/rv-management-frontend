@@ -10,14 +10,22 @@ import { Link } from 'react-router-dom';
 const sorters = {
     [productFilterType.NONE]: (a, b) => a.product_id - b.product_id,
     [productFilterType.NAME_ASC]: (a, b) =>
-        a.product_name.toLowerCase().trim() < b.product_name.toLowerCase().trim()
+        a.product_name.toLowerCase().trim() <
+        b.product_name.toLowerCase().trim()
             ? -1
-            : b.product_name.toLowerCase().trim() === a.product_name.toLowerCase().trim() ? 0 : 1,
+            : b.product_name.toLowerCase().trim() ===
+              a.product_name.toLowerCase().trim()
+                ? 0
+                : 1,
 
     [productFilterType.NAME_DESC]: (a, b) =>
-        a.product_name.toLowerCase().trim() < b.product_name.toLowerCase().trim()
+        a.product_name.toLowerCase().trim() <
+        b.product_name.toLowerCase().trim()
             ? 1
-            : b.product_name.toLowerCase().trim() === a.product_name.toLowerCase().trim() ? 0 : -1,
+            : b.product_name.toLowerCase().trim() ===
+              a.product_name.toLowerCase().trim()
+                ? 0
+                : -1,
 
     [productFilterType.STOCK_LOW]: (a, b) => a.quantity - b.quantity,
 
@@ -65,9 +73,7 @@ export class ProductList extends Component {
                                 </Link>
                             ) : (
                                 <Link
-                                    innerRef={active =>
-                                        (this.active = active)
-                                    }
+                                    innerRef={active => (this.active = active)}
                                     to={`/products/${product.product_id}`}
                                     key={product.product_id}
                                     className="product active"
@@ -93,7 +99,8 @@ const mapDispatchToProps = {
 const mapStateToProps = state => {
     return {
         products: state.product.products,
-        sortedBy: state.productFilter.sortedBy
+        sortedBy: state.productFilter.sortedBy,
+        margin: state.product.globalMargin
     };
 };
 
