@@ -4,6 +4,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import { Link } from 'react-router-dom';
 import { addProduct } from '../../reducers/productReducer';
 import './styles/ProductForm.css';
+import { toggleBarcodeVisibility } from '../../reducers/barcodeListenerReducer';
 
 export class ProductForm extends Component {
     constructor(props) {
@@ -26,10 +27,15 @@ export class ProductForm extends Component {
 
     componentDidMount() {
         this.updateFields();
+        this.props.toggleBarcodeVisibility(false);
     }
 
     componentDidUpdate() {
         this.updateFields();
+    }
+
+    componentWillUnmount() {
+        this.props.toggleBarcodeVisibility(true);
     }
 
     formSubmit(event) {
@@ -221,7 +227,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    addProduct
+    addProduct,
+    toggleBarcodeVisibility
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductForm);
